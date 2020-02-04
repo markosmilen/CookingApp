@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="100dp">
+
+        <ImageView
+            android:id="@+id/meal_image"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/placeholder"/>
+
+        <RelativeLayout
+            android:id="@+id/linar_layout"
+            android:layout_toRightOf="@id/meal_image"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingLeft="20dp">
+
+            <TextView
+                android:id="@+id/meal_title_rw_diets_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Meal Title"
+                android:paddingTop="10dp"
+                android:textSize="18sp"
+                android:textColor="@android:color/black"
+                android:textStyle="bold"/>
+
+            <TextView
+                android:id="@+id/meal_category_rw_diets_regular"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/meal_title_rw_diets_regular"
+                tools:text="Meal Category"
+                android:paddingTop="5dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorGray"/>
+
+
+            <TextView
+                android:id="@+id/meal_score_rw_diets_regular"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/meal_category_rw_diets_regular"
+                android:text="Score"
+                android:paddingRight="10dp"
+                android:paddingTop="15dp"
+                android:textSize="14sp"
+                android:textColor="@color/colorPrimary"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="15dp"
+                android:layout_toRightOf="@id/meal_score_rw_diets_regular"
+                android:layout_below="@id/meal_category_rw_diets_regular"
+                tools:text="84"
+                android:textColor="@color/color_primary"/>
+
+
+        </RelativeLayout>
+
+
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

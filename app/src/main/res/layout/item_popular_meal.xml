@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="300dp"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        >
+        .
+        <ImageView
+            android:id="@+id/popular_item_image"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            android:src="@drawable/placeholder"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"
+            />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:alpha="0.2"
+            android:layout_alignParentBottom="true"
+            android:background="@android:color/black"/>
+
+        <TextView
+            android:id="@+id/popular_item_chategory"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:text="Meal Title"
+            android:layout_alignParentBottom="true"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:paddingBottom="30dp"/>
+
+        <TextView
+            android:id="@+id/popular_item_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:layout_above="@id/popular_item_chategory"
+            android:text="Meal Title"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"/>
+
+
+    </RelativeLayout>
+</androidx.cardview.widget.CardView>
