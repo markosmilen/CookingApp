@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
+import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.models.DietMealsModel;
 import com.example.cookingapp.models.Meal;
 
@@ -23,26 +25,33 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     private final int VIEW_TYPE_ITEM = 0;
     private final int VIEW_TYPE_HEAD = 1;
+    private final int VIEW_TYPE_LOADING = 2;
 
     public ArrayList<DietMealsModel> meals;
     Context context;
     LayoutInflater inflater;
+    MealListener listener;
 
-    public MealsAdapter(Context context,ArrayList<DietMealsModel> meals) {
+    public MealsAdapter(Context context,ArrayList<DietMealsModel> meals, MealListener listener) {
         this.meals = meals;
         this.context = context;
         inflater = LayoutInflater.from(context);
+        this.listener = listener;
     }
 
     @NonNull
     @Override
     public RecyclerView.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
+
         if (viewType == VIEW_TYPE_HEAD){
             View view = inflater.inflate(R.layout.item_meal_header_browose,parent,false);
             return new HeadMealViewHolder(view);
-        } else {
+        } else if (viewType == VIEW_TYPE_ITEM) {
             View view = inflater.inflate(R.layout.item_meals_rw_diets, parent,false);
             return new MealsViewHolder(view);
+        } else {
+            View view = inflater.inflate(R.layout.item_loading, parent,false);
+            return new LoadingViewHolder(view);
         }
     }
 
@@ -51,6 +60,8 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
         if (holder instanceof HeadMealViewHolder){
             showHeaderMeal((HeadMealViewHolder) holder, position);
+        } else if (holder instanceof LoadingViewHolder) {
+            showLoadingView((LoadingViewHolder) holder, position);
         } else {
             populateMeals((MealsViewHolder) holder, position);
         }
@@ -58,7 +69,13 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
 
     @Override
     public int getItemViewType(int position) {
-        return position == 0 ? VIEW_TYPE_HEAD : VIEW_TYPE_ITEM;
+        if (position == 0){
+            return VIEW_TYPE_HEAD;
+        } else if (meals.get(position) == null){
+            return VIEW_TYPE_LOADING;
+        } else {
+            return VIEW_TYPE_ITEM;
+        }
     }
 
     @Override
@@ -92,6 +109,20 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             mealsTitle = (TextView) itemView.findViewById(R.id.meal_title_rw_diets_regular);
             mealsCathegory = (TextView) itemView.findViewById(R.id.meal_category_rw_diets_regular);
             score = (TextView) itemView.findViewById(R.id.meal_score_rw_diets_regular);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.getMealInfo(meals.get(getAdapterPosition()).getId());
+                }
+            });
+        }
+    }
+
+    public class LoadingViewHolder extends RecyclerView.ViewHolder {
+        ProgressBar progressBar;
+        public LoadingViewHolder(@NonNull View itemView) {
+            super(itemView);
+            progressBar = (ProgressBar) itemView.findViewById(R.id.progressBar1);
         }
     }
 
@@ -117,4 +148,9 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             Glide.with(context).load(img).placeholder(R.drawable.placeholder).into(holder.mealcImg);
         }
     }
+
+    private void showLoadingView (LoadingViewHolder viewHolder, int position){
+        //ProgressBar would be displayed
+    }
+
 }

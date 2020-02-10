@@ -4,8 +4,9 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
-import com.example.cookingapp.fragments.MainFragment;
-import com.example.cookingapp.fragments.PopularMealsFragment;
+import com.example.cookingapp.fragments.BottomLvlDietsFragment;
+import com.example.cookingapp.fragments.BottomLvlListsFragment;
+import com.example.cookingapp.fragments.BottomLvlPopularMealsFragment;
 
 public class MealListPagerAdapter extends FragmentPagerAdapter {
 
@@ -20,12 +21,12 @@ public class MealListPagerAdapter extends FragmentPagerAdapter {
     public Fragment getItem(int position) {
         switch (position){
             case 0:
-                return new MainFragment();
+                return new BottomLvlDietsFragment();
             case 1:
-                return new PopularMealsFragment();
+                return new BottomLvlPopularMealsFragment();
             case 2:
-                return new MainFragment();
-            default: return new MainFragment();
+                return new BottomLvlListsFragment();
+            default: return new BottomLvlDietsFragment();
         }
     }
 

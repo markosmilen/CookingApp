@@ -7,5 +7,6 @@
     <color name="colorGray">#888686</color>
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTransparent">@android:color/transparent</color>
+    <color name="search_bar_color">#F1F1F1</color>
 
 </resources>

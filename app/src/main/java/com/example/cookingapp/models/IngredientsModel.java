@@ -4,7 +4,7 @@ public class IngredientsModel {
 
     int id;
     String name, image;
-    IngredientsModel(){}
+    public IngredientsModel(){}
 
     public int getId() {
         return id;
