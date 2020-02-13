@@ -79,7 +79,7 @@ public class BottomLvlPopularMealsFragment extends Fragment {
     public void generatePopularMeals(int offset) {
         isLoading = true;
         HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/random").newBuilder();
-        builder.addQueryParameter("number", "20");
+        builder.addQueryParameter("number", "3");
         builder.addQueryParameter("tags", "veryPopular,dinner");
         if (offset != 0){
             builder.addQueryParameter("offset", offset +"");
@@ -142,7 +142,7 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                         popularMeals.add(null);
                         popularAdapter.notifyItemInserted(popularMeals.size()-1);
                         recyclerView.scrollToPosition(popularMeals.size()-1);
-                        offset = offset + 20;
+                        offset = offset + 3;
                         Handler handler = new Handler();
                         handler.post(new Runnable() {
                             @Override

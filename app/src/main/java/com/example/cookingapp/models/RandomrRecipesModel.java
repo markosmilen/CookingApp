@@ -5,7 +5,7 @@ import java.util.ArrayList;
 public class RandomrRecipesModel {
 
     boolean vegetarian, vegan, glutenFree, dairyFree, veryHealthy, cheap, veryPopular, sustainable, lowFodmap;
-    int weightWatcherSmartPoints, preparationMinutes, cookingMinutes, aggregateLikes, id, readyInMinutes;
+    int weightWatcherSmartPoints, preparationMinutes, cookingMinutes, aggregateLikes, id, readyInMinutes, servings;
     String gaps, sourceUrl, spoonacularSourceUrl, creditsText, sourceName, title, image, imageType, instructions   ;
     double spoonacularScore, healthScore, pricePerServing;
     ArrayList<ExtendedIngredientsModel> extendedIngredients;
@@ -17,6 +17,14 @@ public class RandomrRecipesModel {
 
     public ArrayList<AnalyzedInstructionsModel> getAnalyzedInstructions() {
         return analyzedInstructions;
+    }
+
+    public int getServings() {
+        return servings;
+    }
+
+    public void setServings(int servings) {
+        this.servings = servings;
     }
 
     public void setAnalyzedInstructions(ArrayList<AnalyzedInstructionsModel> analyzedInstructions) {

@@ -77,9 +77,9 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
 
     public void generateRandomMeals(String diet, int offset){
         isLoading = true;
-        HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/search").newBuilder();
+       HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/search").newBuilder();
         builder.addQueryParameter("diet", diet);
-        builder.addQueryParameter("number", "20");
+        builder.addQueryParameter("number", "3");
         if (offset != 0){
             builder.addQueryParameter("offset", offset +"");
         }
@@ -89,6 +89,16 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
         OkHttpClient client = new OkHttpClient();
 
         final Request request = new Request.Builder().url(url).build();
+/*
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url("https://spoonacular-recipe-food-nutrition-v1.p.rapidapi.com/recipes/search?diet=diet&number=3&offset=0&query=lamb")
+                .get()
+                .addHeader("x-rapidapi-host", "spoonacular-recipe-food-nutrition-v1.p.rapidapi.com")
+                .addHeader("x-rapidapi-key", "04166fc3f1msh00ea3067d0f949ep14a9dfjsnc78d51e415c4")
+                .build();
+*/
 
         client.newCall(request).enqueue(new Callback() {
             @Override
@@ -144,7 +154,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                         meals.add(null);
                         mealsAdapter.notifyItemInserted(meals.size()-1);
                         recyclerView.scrollToPosition(meals.size()-2);
-                        offset = offset + 20;
+                        offset = offset + 3;
                         recyclerView.scrollToPosition(offset);
                         Handler handler = new Handler();
                         handler.post(new Runnable() {

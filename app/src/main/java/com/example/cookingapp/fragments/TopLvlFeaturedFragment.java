@@ -42,10 +42,6 @@ import okhttp3.Response;
 
 public class TopLvlFeaturedFragment extends Fragment {
 
-    Gson gson;
-    ArrayList<DietMealsModel> meals = new ArrayList<>();
-    RecyclerView recyclerView;
-    MealsAdapter mealsAdapter;
     String diet;
     SharedPreferences sharedPreferences;
     TabLayout tabLayout;

@@ -10,22 +10,22 @@ import com.example.cookingapp.fragments.InstuctionsFragment;
 public class MealDeatilsPagerAdapter extends FragmentPagerAdapter {
 
     int numTubs;
+    String id;
 
-    public MealDeatilsPagerAdapter(FragmentManager fm, int numTubs) {
+    public MealDeatilsPagerAdapter(FragmentManager fm, int numTubs, String id) {
         super(fm);
         this.numTubs = numTubs;
+        this.id = id;
     }
 
     @Override
     public Fragment getItem(int position) {
-        switch (position){
-            case 0:
-                return new IngridientsFragment();
-            case 1:
-                return new InstuctionsFragment();
-                default: return new IngridientsFragment();
-        }
 
+        if (position == 0) {
+            return IngridientsFragment.newInstance(id);
+        } else {
+            return new InstuctionsFragment();
+        }
     }
 
     @Override
