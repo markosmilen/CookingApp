@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.cookingapp.fragments.EquipmentFragment;
 import com.example.cookingapp.fragments.IngridientsFragment;
 import com.example.cookingapp.fragments.InstuctionsFragment;
 
@@ -24,7 +25,7 @@ public class MealDeatilsPagerAdapter extends FragmentPagerAdapter {
         if (position == 0) {
             return IngridientsFragment.newInstance(id);
         } else {
-            return new InstuctionsFragment();
+            return EquipmentFragment.newInstance(id);
         }
     }
 
