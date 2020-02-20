@@ -32,14 +32,16 @@
             android:paddingBottom="10dp"/>
 
         <Button
-            android:layout_width="wrap_content"
-            android:layout_height="20dp"
+            android:id="@+id/bookmark_button"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
             android:layout_gravity="end"
-            android:background="@drawable/button_shape_inverse"
+            android:background="@drawable/ic_not_bookmarked"
             android:textSize="10sp"
-            android:text="Add to FAV"
             android:paddingBottom="8dp"
-            android:layout_marginRight="20dp"/>
+            android:layout_marginRight="20dp"
+            android:backgroundTint="@color/color_primary"
+            android:onClick="onBookmarkClicked"/>
 
         <TextView
             android:layout_width="match_parent"
@@ -129,6 +131,7 @@
             android:id="@+id/meal_detail_tabs"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="#ECECEC"
             app:tabIndicatorColor="@color/colorPrimary"
             app:tabSelectedTextColor="@color/colorPrimary"
             app:tabTextColor="@color/colorPrimary"/>

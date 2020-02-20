@@ -34,6 +34,18 @@
                 android:fitsSystemWindows="true"
                 app:layout_collapseMode="parallax"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Linguine"
+                android:textSize="70sp"
+                android:textColor="@color/colorWhite"
+                android:layout_marginTop="120dp"
+                android:textStyle="bold"
+                android:fontFamily="@font/scriptin"/>
+
+
             <View
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -70,70 +82,82 @@
             android:gravity="center_horizontal"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:padding="10dp"
-            android:gravity="center"
-            android:text="Choose your diet please"
-            android:textColor="@color/color_primary"
-            android:textSize="22sp"
-            />
-
-            <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_diets_top"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_diets_mid"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"/>
-
-            <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recycler_view_diets_bottom"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_horizontal"
-            android:paddingLeft="5dp"
-            android:paddingRight="5dp"/>
+            <Button
+                android:id="@+id/enter_kitchen"
+                android:layout_marginTop="30dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/button_shape_inverse"
+                android:text="enter our kitchen"
+                android:layout_gravity="center_horizontal"
+                android:gravity="center"
+                android:textColor="@color/color_primary"
+                android:textSize="22sp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:onClick="onEnterKitchenClicked"
+                android:layout_marginBottom="30dp"/>
 
             <View
-            android:layout_width="match_parent"
-            android:layout_height="1dp"
-            android:background="@color/color_primary"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="30dp"/>
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_primary"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"/>
 
             <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:textColor="@color/color_primary"
-            android:layout_marginTop="20dp"
-            android:textSize="22sp"
-            android:gravity="center"
-            android:text="Do you want to see all recipes? No problem, just press continue"/>
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:gravity="center"
+                android:text="You can start browosing our diet menues"
+                android:textColor="@color/color_primary"
+                android:textSize="20sp"
+                />
 
-            <Button
-            android:layout_marginTop="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/button_shape_inverse"
-            android:text="continue"
-            android:layout_gravity="center_horizontal"
-            android:gravity="center"
-            android:textColor="@color/color_primary"
-            android:textSize="22sp"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"/>
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_diets_top"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_diets_mid"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_diets_bottom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:paddingLeft="5dp"
+                android:paddingRight="5dp"/>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_primary"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="30dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_horizontal"
+                android:text="Linguine"
+                android:textSize="70sp"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="bold"
+                android:fontFamily="@font/scriptin"
+                android:layout_marginBottom="50dp"/>
 
         </LinearLayout>
 

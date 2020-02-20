@@ -24,8 +24,7 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="170dp"
-            android:alpha="0.2"
-            android:background="@android:color/black"/>
+            android:background="@drawable/shape_gradient_black"/>
 
         <TextView
             android:id="@+id/top_item_category"

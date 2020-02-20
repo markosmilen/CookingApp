@@ -114,49 +114,7 @@ public class IngridientsFragment extends Fragment {
                         }
                     });
                 }
-
             }
         });
-
-
     }
-
- /*   private void getIngridients(String id) {
-       // HttpUrl url = new HttpUrl.Builder().scheme("https").host("www.spoonacular.com").addPathSegment("food").addPathSegment("ingredients").addPathSegment(id).addPathSegment("information").build();
-
-        IngredientsModel model1 = new IngredientsModel();
-        model1.setName("KROMID");
-        ingridiens.add(model1);
-
-        IngredientsModel model2 = new IngredientsModel();
-        model2.setName("PRAZ");
-        ingridiens.add(model2);
-
-        IngredientsModel model3 = new IngredientsModel();
-        model3.setName("LUK");
-        ingridiens.add(model3);
-
-        IngredientsModel model4 = new IngredientsModel();
-        model4.setName("LUK");
-        ingridiens.add(model4);
-
-        IngredientsModel model5 = new IngredientsModel();
-        model5.setName("LUK");
-        ingridiens.add(model5);
-
-        IngredientsModel model6 = new IngredientsModel();
-        model6.setName("LUK");
-        ingridiens.add(model6);
-
-        IngredientsModel model8 = new IngredientsModel();
-        model8.setName("LUK");
-        ingridiens.add(model8);
-
-        IngredientsModel model9 = new IngredientsModel();
-        model9.setName("LUK");
-        ingridiens.add(model9);
-
-
-    }  */
-
 }

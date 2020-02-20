@@ -6,9 +6,73 @@
     tools:context=".fragments.TopLvlBookmarkFragment">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
+   <RelativeLayout
+        android:id="@+id/bookmark_layout_no_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/color_primaryLight"
+       android:visibility="visible">
 
-</FrameLayout>
+         <ImageButton
+             android:id="@+id/add_button"
+             android:layout_width="70dp"
+             android:layout_height="70dp"
+             android:background="@drawable/ic_add"
+             android:layout_centerInParent="true"
+             />
+
+         <TextView
+             android:id="@+id/add_to_collection"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:gravity="center"
+             android:layout_below="@+id/add_button"
+             android:text="Add to this Collection"
+             android:padding="10dp"
+             android:textSize="20sp"/>
+
+        <TextView
+            android:id="@+id/empty_collection"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:text="This collection is currently empty :("
+            android:textColor="@color/color_primary"
+            android:layout_below="@id/add_to_collection"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DISCOVER THE 360K+ RECIPES WE HAVE"
+            android:layout_below="@id/empty_collection"
+            android:gravity="center"
+            android:padding="10dp"
+            />
+
+    </RelativeLayout>
+
+    <RelativeLayout
+           android:id="@+id/bookmark_layout_with_items"
+           android:layout_width="match_parent"
+           android:layout_height="match_parent"
+        android:visibility="invisible">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbarBookmark"
+            android:layout_width="match_parent"
+            android:layout_height="?attr/actionBarSize"
+           android:fitsSystemWindows="true"
+            android:gravity="center"
+            android:background="@color/colorWhite"
+            android:theme="@style/AppTheme"/>
+
+
+           <androidx.recyclerview.widget.RecyclerView
+               android:id="@+id/recycler_view_bookmarked"
+               android:layout_width="match_parent"
+               android:layout_height="match_parent"
+               android:layout_below="@id/toolbarBookmark"/>
+
+       </RelativeLayout>
+
+   </FrameLayout>

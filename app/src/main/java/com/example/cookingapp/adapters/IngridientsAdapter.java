@@ -14,6 +14,7 @@ import com.example.cookingapp.models.IngredientsAmountModel;
 import com.example.cookingapp.models.IngredientsAndValueModel;
 import com.example.cookingapp.models.IngredientsModel;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.IngridientsViewHolder> {
@@ -39,7 +40,9 @@ public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.
     public void onBindViewHolder(@NonNull IngridientsViewHolder holder, int position) {
         IngredientsAndValueModel ingredientsAndValueModel = ingredients.get(position);
         holder.ingridient.setText(ingredientsAndValueModel.getName());
-        holder.amounth.setText(String.format("%.2f", ingredientsAndValueModel.getAmount().getMetric().getValue()));
+
+        DecimalFormat df = new DecimalFormat("0.##");
+        holder.amounth.setText(df.format(ingredientsAndValueModel.getAmount().getMetric().getValue()));
         holder.description.setText(ingredientsAndValueModel.getAmount().getMetric().getUnit());
     }
 

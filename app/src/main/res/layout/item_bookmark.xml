@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
+    app:cardCornerRadius="10dp"
+    app:cardElevation="10dp"
+    android:layout_margin="10dp"
+    >
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+
+        <TextView
+            android:id="@+id/bookmark_meal_name"
+            android:layout_width="match_parent"
+            android:layout_height="120dp"
+            android:padding="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/colorPrimaryDark"
+            tools:text="Chicken Breast"
+            android:background="@drawable/shape_gradient_white"
+            android:elevation="5dp"/>
+
+
+        <ImageView
+            android:id="@+id/bookmark_meal_imake"
+            android:layout_width="match_parent"
+            android:layout_height="150dp"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:scaleType="centerInside"
+            tools:background="@drawable/background_primary"/>
+
+        <Button
+            android:id="@+id/delete_bookmark"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="5dp"
+            android:background="@drawable/ic_delete"
+            android:layout_below="@id/bookmark_meal_imake"
+            android:backgroundTint="@color/color_primary"
+            android:onClick="onBookmarkDeleted"
+            />
+
+
+    </RelativeLayout>
+
+
+
+</androidx.cardview.widget.CardView>

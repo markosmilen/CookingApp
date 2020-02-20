@@ -40,5 +40,7 @@ dependencies {
 
     implementation 'org.sufficientlysecure:html-textview:3.9'
 
+    implementation 'com.github.satyan:sugar:1.3'
+
 
 }

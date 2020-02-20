@@ -2,7 +2,7 @@ package com.example.cookingapp.models;
 
 import java.util.ArrayList;
 
-public class RandomrRecipesModel {
+public class RecipeInformationModel {
 
     boolean vegetarian, vegan, glutenFree, dairyFree, veryHealthy, cheap, veryPopular, sustainable, lowFodmap;
     int weightWatcherSmartPoints, preparationMinutes, cookingMinutes, aggregateLikes, id, readyInMinutes, servings;
@@ -13,7 +13,7 @@ public class RandomrRecipesModel {
     WinePairingModel winePairing;
     ArrayList<AnalyzedInstructionsModel> analyzedInstructions;
 
-    RandomrRecipesModel(){}
+    RecipeInformationModel(){}
 
     public ArrayList<AnalyzedInstructionsModel> getAnalyzedInstructions() {
         return analyzedInstructions;

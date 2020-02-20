@@ -9,16 +9,13 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.cookingapp.R;
+import com.example.cookingapp.fragments.TopLvlBookmarkFragment;
 import com.example.cookingapp.fragments.TopLvlFeaturedFragment;
 import com.example.cookingapp.fragments.TopLvlSearchFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BrowoseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
 
-
-
-
-    String dietSelected;
     BottomNavigationView bottomNavigationView;
 
     @Override
@@ -26,14 +23,10 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_browose);
 
-        dietSelected = getIntent().getStringExtra("DIET");
-        Log.d("DIET_PASSED", "" + dietSelected);
-
         //setting bottom navigation
         bottomNavigationView = (BottomNavigationView) findViewById(R.id.bottomNav);
         bottomNavigationView.setOnNavigationItemSelectedListener(this);
         bottomNavigationView.setSelectedItemId(R.id.featured_nav);
-
     }
 
     @Override
@@ -46,7 +39,7 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
                 showTopLevelFragment(new TopLvlSearchFragment());
                 break;
             case R.id.saved_nav:
-               // showTopLevelFragment(new TopLvlSearchFragment());
+                showTopLevelFragment(new TopLvlBookmarkFragment());
                 break;
             case R.id.cookbook_nav:
 
@@ -55,9 +48,6 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
         return false;
     }
 
-
-
-
     private void showTopLevelFragment(Fragment fragment) {
         // Use the fragment manager to dynamically change the fragment displayed in the FrameLayout.
         getSupportFragmentManager().beginTransaction()
@@ -65,5 +55,4 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
                 .addToBackStack(null)
                 .commit();
     }
-
 }

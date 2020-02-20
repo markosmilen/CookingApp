@@ -4,11 +4,23 @@
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
     >
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerview_selectedDiet"
+    
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="5dp"/>
+        android:layout_height="match_parent">
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerview_selectedDiet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="5dp"/>
+        
+        <ProgressBar
+            android:id="@+id/progress_bar_meals"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"/>
+        
+    </RelativeLayout>
 
 </FrameLayout>

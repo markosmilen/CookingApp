@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -11,8 +14,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.MealDeatilsPagerAdapter;
-import com.example.cookingapp.fragments.IngridientsFragment;
-import com.example.cookingapp.models.RandomrRecipesModel;
+import com.example.cookingapp.models.BookmarkedModel;
+import com.example.cookingapp.models.RecipeInformationModel;
 import com.example.cookingapp.models.SummerizeRecipeModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -23,6 +26,7 @@ import org.sufficientlysecure.htmltextview.HtmlTextView;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -42,7 +46,11 @@ public class DetailsActivity extends AppCompatActivity {
     int id;
     Gson gson;
     SummerizeRecipeModel model;
-    RandomrRecipesModel recepiInfo;
+    RecipeInformationModel recepiInfo;
+    Boolean isBookmarked = false;
+    String mealName, imgUrl;
+    ArrayList<BookmarkedModel> bookmarks = new ArrayList<>();
+    Button bookmarked;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +62,7 @@ public class DetailsActivity extends AppCompatActivity {
         summary = (HtmlTextView) findViewById(R.id.recipe_summary);
         servings = (TextView) findViewById(R.id.servings);
         time = (TextView) findViewById(R.id.prep_time);
+        bookmarked = (Button) findViewById(R.id.bookmark_button);
         viewPager = (ViewPager) findViewById(R.id.viewPagerIngredients);
         gson = new Gson();
 
@@ -62,8 +71,9 @@ public class DetailsActivity extends AppCompatActivity {
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"));
         tabLayout.addTab(tabLayout.newTab().setText("Instructions"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        getRecipeSummary(id);
+       // getRecipeSummary(id);
         getRecipeInformation(id);
+        isBookmarked = isMealBookmarked(id);
 
         final MealDeatilsPagerAdapter pagerAdapter = new MealDeatilsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), id+"");
         viewPager.setAdapter(pagerAdapter);
@@ -83,13 +93,11 @@ public class DetailsActivity extends AppCompatActivity {
 
             @Override
             public void onTabReselected(TabLayout.Tab tab) {
-
             }
         });
-
     }
 
-    private void getRecipeSummary(int id) {
+    /* private void getRecipeSummary(int id) {
 
         HttpUrl url = new HttpUrl.Builder()
                 .scheme("https")
@@ -120,15 +128,16 @@ public class DetailsActivity extends AppCompatActivity {
                     DetailsActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            name.setText(model.getTitle());
-                            summary.setHtml(model.getSummary(), new HtmlAssetsImageGetter(summary));
+                            mealName = model.getTitle();
+                            name.setText(mealName);
+                            //summary.setHtml(model.getSummary(), new HtmlAssetsImageGetter(summary));
                         }
                     });
                 }
             }
         });
-
     }
+*/
 
     private void getRecipeInformation(int id){
         HttpUrl url = new HttpUrl.Builder()
@@ -148,25 +157,60 @@ public class DetailsActivity extends AppCompatActivity {
         client.newCall(request).enqueue(new Callback() {
             @Override
             public void onFailure(@NotNull Call call, @NotNull IOException e) {
-
             }
 
             @Override
             public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
                 if(response.isSuccessful()){
                     String jsonString = response.body().string();
-                    recepiInfo = gson.fromJson(jsonString, RandomrRecipesModel.class);
+                    recepiInfo = gson.fromJson(jsonString, RecipeInformationModel.class);
                     DetailsActivity.this.runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             servings.setText(recepiInfo.getServings()+" " + "ss");
                             time.setText(recepiInfo.getReadyInMinutes() + " " + "min");
-                            String img = recepiInfo.getImage();
-                            Glide.with(DetailsActivity.this).load(img).placeholder(R.drawable.placeholder).into(mealImg);
+                            imgUrl = recepiInfo.getImage();
+                            summary.setHtml(recepiInfo.getInstructions(), new HtmlAssetsImageGetter(summary));
+                            Glide.with(DetailsActivity.this).load(imgUrl).placeholder(R.drawable.placeholder).into(mealImg);
                         }
                     });
                 }
             }
         });
+    }
+
+    public void onBookmarkClicked(View view) {
+        if(!isBookmarked){
+            isBookmarked = true;
+            BookmarkedModel bookmark = new BookmarkedModel(id, imgUrl, mealName);
+            Log.d("GOT_ID", bookmark.getIdentificationNum() + "");
+            bookmark.save();
+            bookmarked.setBackgroundResource(R.drawable.ic_bookmarked);
+            Toast.makeText(this, "NOW ITS BOOKMARKED", Toast.LENGTH_SHORT).show();
+
+        } else {
+            isBookmarked = false;
+            BookmarkedModel.deleteAll(BookmarkedModel.class);
+            bookmarked.setBackgroundResource(R.drawable.ic_not_bookmarked);
+            Toast.makeText(this, "NOW IT IS NOT", Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public boolean isMealBookmarked(int id){
+
+        List <BookmarkedModel> bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
+        boolean check = false;
+
+        if (bookmarkedMeals != null){
+            for (int i = 0; i<bookmarkedMeals.size(); i++) {
+                BookmarkedModel favmeal = bookmarkedMeals.get(i);
+                int identNum = favmeal.getIdentificationNum();
+                if (identNum == id) {
+                    check = true;
+                    bookmarked.setBackgroundResource(R.drawable.ic_bookmarked);
+                }
+            }
+        }
+        return check;
     }
 }

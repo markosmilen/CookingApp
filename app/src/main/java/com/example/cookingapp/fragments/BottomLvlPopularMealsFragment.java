@@ -17,7 +17,7 @@ import android.view.ViewGroup;
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.PopularMealsAdapter;
 import com.example.cookingapp.models.RandomResponceModel;
-import com.example.cookingapp.models.RandomrRecipesModel;
+import com.example.cookingapp.models.RecipeInformationModel;
 import com.google.gson.Gson;
 
 import org.jetbrains.annotations.NotNull;
@@ -37,7 +37,7 @@ public class BottomLvlPopularMealsFragment extends Fragment {
     public static final String TAG = BottomLvlPopularMealsFragment.class.getSimpleName();
 
     Gson gson;
-    ArrayList<RandomrRecipesModel> popularMeals = new ArrayList<>();
+    ArrayList<RecipeInformationModel> popularMeals = new ArrayList<>();
     RecyclerView recyclerView;
     PopularMealsAdapter popularAdapter;
     boolean isLoading = false;
@@ -46,7 +46,6 @@ public class BottomLvlPopularMealsFragment extends Fragment {
     public BottomLvlPopularMealsFragment() {
         // Required empty public constructor
     }
-
 
     public static BottomLvlPopularMealsFragment newInstance() {
         BottomLvlPopularMealsFragment fragment = new BottomLvlPopularMealsFragment();
@@ -60,9 +59,6 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bottom_lvl_popular_meals, container, false);
-
-
-
         return view;
     }
 
@@ -102,7 +98,7 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                 if (response.isSuccessful()){
                     String jsonString = response.body().string();
                     RandomResponceModel model = gson.fromJson(jsonString, RandomResponceModel.class);
-                    ArrayList<RandomrRecipesModel> result = model.getRecipes();
+                    ArrayList<RecipeInformationModel> result = model.getRecipes();
                     for (int i = 0; i < result.size(); i++){
                         popularMeals.add(result.get(i));
                     }
@@ -134,7 +130,6 @@ public class BottomLvlPopularMealsFragment extends Fragment {
             public void onScrolled(@NonNull RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-
                 LinearLayoutManager linearLayoutManager =(LinearLayoutManager) recyclerView.getLayoutManager();
 
                 if(!isLoading){
@@ -151,14 +146,11 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                                 int scrollPosition = popularMeals.size();
                                 popularAdapter.notifyItemRemoved(scrollPosition);
                                 generatePopularMeals(offset);
-
                                 isLoading = true;
                             }
                         });
-                        // recyclerView.scrollToPosition(meals.size()-1);
                     }
                 }
-
             }
         });
     }

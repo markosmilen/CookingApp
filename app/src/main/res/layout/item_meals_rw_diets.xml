@@ -8,8 +8,9 @@
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp">
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
+        android:orientation="horizontal"
         android:layout_height="100dp">
 
         <ImageView
@@ -19,59 +20,106 @@
             android:scaleType="centerCrop"
             android:src="@drawable/placeholder"/>
 
-        <RelativeLayout
+        <LinearLayout
             android:id="@+id/linar_layout"
-            android:layout_toRightOf="@id/meal_image"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:paddingLeft="20dp">
+            android:orientation="vertical"
+            android:paddingLeft="20dp"
+            android:paddingRight="10dp">
 
             <TextView
                 android:id="@+id/meal_title_rw_diets_regular"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
                 tools:text="Meal Title"
-                android:paddingTop="10dp"
-                android:textSize="18sp"
+                android:textSize="16sp"
                 android:textColor="@android:color/black"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:gravity="center_vertical"
                 android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/meal_category_rw_diets_regular"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/meal_title_rw_diets_regular"
-                tools:text="Meal Category"
-                android:paddingTop="5dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Meal Category"
                 android:textSize="14sp"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:gravity="center_vertical"
                 android:textColor="@color/colorGray"/>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="horizontal"
+                android:layout_weight="1">
 
-            <TextView
-                android:id="@+id/meal_score_rw_diets_regular"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/meal_category_rw_diets_regular"
-                android:text="Score"
-                android:paddingRight="10dp"
-                android:paddingTop="15dp"
-                android:textSize="14sp"
-                android:textColor="@color/colorPrimary"/>
+                <TextView
+                    android:id="@+id/meal_score_rw_diets_regular"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="App score:"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"/>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="15dp"
-                android:layout_toRightOf="@id/meal_score_rw_diets_regular"
-                android:layout_below="@id/meal_category_rw_diets_regular"
-                tools:text="84"
-                android:textColor="@color/color_primary"/>
+                <TextView
+                    android:id="@+id/score_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="84"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color_primary"/>
+
+                <View
+                    android:id="@+id/devider"
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginTop="5dp"
+                    android:background="@color/color_primary"
+                    android:gravity="center_vertical" />
+
+                <TextView
+                    android:id="@+id/health_score"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="Health score:"
+                    android:textSize="14sp"
+                    android:ellipsize="end"
+                    android:maxLines="1"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/colorPrimary"/>
+
+                <TextView
+                    android:id="@+id/health_score_number"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:text="84"
+                    android:gravity="center_vertical"
+                    android:textColor="@color/color_primary"/>
+
+            </LinearLayout>
 
 
-        </RelativeLayout>
+
+        </LinearLayout>
 
 
 
-    </RelativeLayout>
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

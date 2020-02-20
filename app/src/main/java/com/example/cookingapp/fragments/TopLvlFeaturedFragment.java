@@ -76,7 +76,7 @@ public class TopLvlFeaturedFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Featured"));
         tabLayout.addTab(tabLayout.newTab().setText("Popular"));
-        tabLayout.addTab(tabLayout.newTab().setText("New"));
+        tabLayout.addTab(tabLayout.newTab().setText("Desserts"));
 
         final MealListPagerAdapter pagerAdapter = new MealListPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         pager = (ViewPager) view.findViewById(R.id.viewPager);
