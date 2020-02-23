@@ -39,8 +39,8 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
     public void onBindViewHolder(@NonNull EquipmentViewHolder holder, int position) {
         EquipmentModel model = equipment.get(position);
         holder.equipment.setText(model.getName());
-        String img = model.getImage();
-        Glide.with(context).load(img).centerCrop().into(holder.equipmentImg);
+        String img = "https://spoonacular.com/cdn/equipment_250x250/" +  model.getImage();
+        Glide.with(context).load(img).centerInside().into(holder.equipmentImg);
     }
 
     @Override

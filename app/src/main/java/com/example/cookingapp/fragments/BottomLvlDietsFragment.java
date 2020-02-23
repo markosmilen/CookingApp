@@ -79,8 +79,12 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
 
         if (diet.equals("all")){
             generateRandomMealsList();
+            randomMealsAdapter = new RandomMealsAdapter(randomMeals, getContext(), BottomLvlDietsFragment.this);
+            recyclerView.setAdapter(randomMealsAdapter);
         } else {
             generateDietMeals(diet, offset);
+            mealsAdapter = new MealsAdapter(getContext(), meals, BottomLvlDietsFragment.this);
+            recyclerView.setAdapter(mealsAdapter);
         }
 
         initScrollListener();
@@ -90,6 +94,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
     }
 
     private void generateRandomMealsList() {
+        isLoading = true;
         HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/random").newBuilder();
         builder.addQueryParameter("number", "20");
 
@@ -120,10 +125,9 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                randomMealsAdapter = new RandomMealsAdapter(randomMeals, getContext(), BottomLvlDietsFragment.this);
-                             //   mealsAdapter = new MealsAdapter(getContext(), randomMeals, BottomLvlDietsFragment.this);
-                                recyclerView.setAdapter(randomMealsAdapter);
+                                int scrollposition = randomMeals.size();
                                 randomMealsAdapter.notifyDataSetChanged();
+                                recyclerView.scrollToPosition(scrollposition);
                                 isLoading = false;
                                 progressBar.setVisibility(View.GONE);
                             }
@@ -171,8 +175,6 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                mealsAdapter = new MealsAdapter(getContext(), meals, BottomLvlDietsFragment.this);
-                                recyclerView.setAdapter(mealsAdapter);
                                 mealsAdapter.notifyDataSetChanged();
                                 isLoading = false;
                                 progressBar.setVisibility(View.GONE);
@@ -210,7 +212,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                                     randomMeals.remove(randomMeals.size()-1);
                                     int scrollPosition = randomMeals.size();
                                     mealsAdapter.notifyItemRemoved(scrollPosition);
-                                    recyclerView.scrollToPosition(scrollPosition);
+                                  //  recyclerView.scrollToPosition(scrollPosition);
                                     generateRandomMealsList();
                                     isLoading = true;
                                 }
@@ -220,9 +222,11 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                 } else {
                     if(!isLoading){
                         if(linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == meals.size()-1){
-                            meals.add(null);
-                            mealsAdapter.notifyItemInserted(meals.size());
                             offset = offset + 20;
+                            meals.add(null);
+                            mealsAdapter.notifyItemInserted(meals.size()-1);
+                            recyclerView.scrollToPosition(meals.size()-1);
+
                             Handler handler = new Handler();
                             handler.post(new Runnable() {
                                 @Override
@@ -230,12 +234,10 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                                     meals.remove(meals.size()-1);
                                     int scrollPosition = meals.size();
                                     mealsAdapter.notifyItemRemoved(scrollPosition);
-                                    linearLayoutManager.scrollToPosition(scrollPosition-1);
                                     generateDietMeals(diet, offset);
                                     isLoading = true;
                                 }
                             });
-                            // recyclerView.scrollToPosition(meals.size()-1);
                         }
                     }
                 }

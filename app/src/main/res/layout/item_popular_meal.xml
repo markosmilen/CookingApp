@@ -3,20 +3,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="300dp"
+    android:layout_height="220dp"
     android:layout_margin="10dp"
     app:cardCornerRadius="10dp"
-    android:elevation="10dp">
+    app:cardElevation="20dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="220dp"
         >
-        .
+
         <ImageView
             android:id="@+id/popular_item_image"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="220dp"
             android:src="@drawable/placeholder"
             android:scaleType="centerCrop"
             android:adjustViewBounds="true"
@@ -39,8 +39,9 @@
             android:layout_alignParentBottom="true"
             android:textSize="14sp"
             android:textStyle="bold"
+            android:elevation="5dp"
             android:textColor="@android:color/white"
-            android:paddingBottom="30dp"/>
+            android:paddingBottom="10dp"/>
 
         <TextView
             android:id="@+id/popular_item_title"
@@ -52,7 +53,15 @@
             android:text="Meal Title"
             android:textSize="20sp"
             android:textStyle="bold"
+            android:elevation="5dp"
             android:textColor="@android:color/white"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="80dp"
+            android:background="@drawable/shape_gradient_black_down"
+            android:layout_alignParentBottom="true"
+            />
 
 
     </RelativeLayout>

@@ -49,7 +49,6 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
     }
 
     private void showTopLevelFragment(Fragment fragment) {
-        // Use the fragment manager to dynamically change the fragment displayed in the FrameLayout.
         getSupportFragmentManager().beginTransaction()
                 .replace(R.id.top_lvl_frame, fragment)
                 .addToBackStack(null)

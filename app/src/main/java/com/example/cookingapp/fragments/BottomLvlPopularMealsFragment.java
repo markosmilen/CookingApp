@@ -59,24 +59,28 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_bottom_lvl_popular_meals, container, false);
+        gson = new Gson();
+        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_popular_meals);
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        popularAdapter = new PopularMealsAdapter(getContext(), popularMeals);
+        recyclerView.setAdapter(popularAdapter);
+        generatePopularMeals(offset);
+        initScrollListener();
         return view;
     }
 
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
-        gson = new Gson();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_popular_meals);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        generatePopularMeals(offset);
-        initScrollListener();
+
         super.onViewCreated(view, savedInstanceState);
     }
 
     public void generatePopularMeals(int offset) {
         isLoading = true;
         HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/random").newBuilder();
-        builder.addQueryParameter("number", "3");
+        builder.addQueryParameter("number", "20");
         builder.addQueryParameter("tags", "veryPopular,dinner");
+
         if (offset != 0){
             builder.addQueryParameter("offset", offset +"");
         }
@@ -107,9 +111,9 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                popularAdapter = new PopularMealsAdapter(getContext(), popularMeals);
-                                recyclerView.setAdapter(popularAdapter);
+                                int scrollposition = popularMeals.size();
                                 popularAdapter.notifyDataSetChanged();
+                                recyclerView.scrollToPosition(scrollposition);
                                 isLoading = false;
                             }
                         });
@@ -137,7 +141,7 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                         popularMeals.add(null);
                         popularAdapter.notifyItemInserted(popularMeals.size()-1);
                         recyclerView.scrollToPosition(popularMeals.size()-1);
-                        offset = offset + 3;
+                        offset = offset + 20;
                         Handler handler = new Handler();
                         handler.post(new Runnable() {
                             @Override

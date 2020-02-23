@@ -1,9 +1,11 @@
 package com.example.cookingapp.adapters;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -42,8 +44,15 @@ public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.
         holder.ingridient.setText(ingredientsAndValueModel.getName());
 
         DecimalFormat df = new DecimalFormat("0.##");
-        holder.amounth.setText(df.format(ingredientsAndValueModel.getAmount().getMetric().getValue()));
-        holder.description.setText(ingredientsAndValueModel.getAmount().getMetric().getUnit());
+        holder.amounth.setText(df.format(ingredientsAndValueModel.getAmount().getMetric().getValue()) + " " + ingredientsAndValueModel.getAmount().getMetric().getUnit() );
+
+        if (position%2 == 1){
+            holder.itemView.setBackgroundColor(Color.parseColor("#EFF0F1"));
+        }
+        else {
+            holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
+        }
+        //holder.description.setText();
     }
 
     @Override
@@ -54,12 +63,14 @@ public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.
     public class IngridientsViewHolder extends RecyclerView.ViewHolder {
 
         TextView amounth, description, ingridient;
+        LinearLayout layout;
 
         public IngridientsViewHolder(@NonNull View itemView) {
             super(itemView);
             amounth = (TextView) itemView.findViewById(R.id.ingridients_amount);
             ingridient = (TextView) itemView.findViewById(R.id.ingridients_name);
-            description = (TextView) itemView.findViewById(R.id.ingredients_amount_description);
+            layout = (LinearLayout) itemView.findViewById(R.id.item_ingridient_layout);
+          //  description = (TextView) itemView.findViewById(R.id.ingredients_amount_description);
         }
     }
 }
