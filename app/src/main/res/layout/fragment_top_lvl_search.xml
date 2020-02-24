@@ -1,21 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:fitsSystemWindows="true"
     tools:context=".fragments.TopLvlSearchFragment">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fitsSystemWindows="true"
         android:orientation="vertical">
 
         <TextView
+            android:id="@+id/search_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_weight="0"
@@ -42,12 +42,16 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginBottom="10dp"
+            android:layout_below="@id/search_text"
             />
 
             <LinearLayout
+                android:id="@+id/search_fields_layout"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                android:layout_below="@id/search_edit_text"
                 android:layout_weight="1"
+                android:visibility="visible"
                 android:orientation="vertical">
 
                 <!-- first row fields -->
@@ -62,6 +66,7 @@
                     android:layout_marginRight="20dp">
 
                     <LinearLayout
+                        android:id="@+id/search_pasta"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -72,12 +77,11 @@
                         >
 
                         <ImageView
-                            android:id="@+id/search_pasta"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
                             android:src="@drawable/ic_pasta"
-                            android:layout_weight="1"/>
+                            android:layout_weight="1" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -91,6 +95,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/search_vegetarian"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -101,7 +106,6 @@
                         android:paddingBottom="10dp">
 
                         <ImageView
-                            android:id="@+id/search_vegetarian"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -120,6 +124,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/search_asian"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -129,7 +134,6 @@
                         android:paddingBottom="10dp">
 
                         <ImageView
-                            android:id="@+id/search_asian"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -160,6 +164,7 @@
                     android:layout_marginRight="20dp">
 
                     <LinearLayout
+                        android:id="@+id/search_desserts"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -170,7 +175,6 @@
                         >
 
                         <ImageView
-                            android:id="@+id/search_desserts"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -189,6 +193,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/search_quick"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_marginLeft="3dp"
@@ -199,7 +204,6 @@
                         android:paddingBottom="10dp">
 
                         <ImageView
-                            android:id="@+id/search_quick"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -218,6 +222,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/search_chicken"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -227,7 +232,6 @@
                         android:paddingBottom="10dp">
 
                         <ImageView
-                            android:id="@+id/search_chicken"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -259,6 +263,7 @@
                     >
 
                     <LinearLayout
+                        android:id="@+id/search_fish"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -269,7 +274,7 @@
                         >
 
                         <ImageView
-                            android:id="@+id/search_fish"
+
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -288,6 +293,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/search_no_gluten"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -298,7 +304,6 @@
                         android:paddingBottom="10dp">
 
                         <ImageView
-                            android:id="@+id/search_no_gluten"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -317,6 +322,7 @@
                     </LinearLayout>
 
                     <LinearLayout
+                        android:id="@+id/search_salads"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -326,7 +332,6 @@
                         android:paddingBottom="10dp">
 
                         <ImageView
-                            android:id="@+id/search_salads"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -346,133 +351,23 @@
                 </LinearLayout>
 
             </LinearLayout>
-    </LinearLayout>
 
+            <LinearLayout
+                android:id="@+id/results_layout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/search_edit_text"
+                android:layout_weight="1"
+                android:visibility="visible"
+                android:orientation="vertical">
 
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/recyclerView_results"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
 
-<!-- <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-       >
-
-        <Button
-            android:id="@+id/main_dish_search"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_shape_inverse"
-            android:drawableTop="@drawable/ic_vegetable_70"
-            android:drawablePadding="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="5dp"/>
-
-        <Button
-            android:id="@+id/asian_dish_search"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/main_dish_search"
-            android:background="@drawable/button_shape_inverse"
-            android:drawableTop="@drawable/ic_sushi"
-            android:drawablePadding="10dp"
-            android:layout_marginRight="5dp"/>
-
-        <Button
-            android:id="@+id/vegeterian_dish_search"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginRight="5dp"
-            android:layout_toLeftOf="@id/main_dish_search"
-            android:background="@drawable/button_shape_inverse"
-            android:drawableTop="@drawable/ic_vegetable_70"
-
-            android:drawablePadding="10dp"/>
-
-        <TextView
-            android:id="@+id/main_dish_title"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Main"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@id/main_dish_search"
-            android:elevation="20dp"
-            android:background="@android:color/transparent"
-            android:paddingBottom="5dp"/>
-
-        <TextView
-            android:id="@+id/vegetarian_dish_title"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Vegetarian"
-            android:gravity="center"
-            android:paddingRight="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_alignBottom="@id/main_dish_search"
-            android:layout_toLeftOf="@id/main_dish_title"
-            android:elevation="20dp"
-            android:background="@android:color/transparent"
-            android:paddingBottom="5dp"/>
-
-        <TextView
-            android:id="@+id/asian_dish_title"
-            android:layout_width="100dp"
-            android:layout_height="wrap_content"
-            android:text="Asian"
-            android:gravity="center"
-            android:layout_centerHorizontal="true"
-            android:layout_toRightOf="@id/main_dish_title"
-            android:layout_alignBottom="@id/main_dish_search"
-            android:elevation="20dp"
-            android:layout_marginLeft="5dp"
-            android:background="@android:color/transparent"
-            android:paddingBottom="5dp"/>
-
+            </LinearLayout>
 
     </RelativeLayout>
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        >
-
-        <TextView
-            android:id="@+id/dessert_dish_search"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="10dp"
-            android:background="@drawable/button_shape_inverse"
-            android:drawableTop="@drawable/ic_vegetable_70"
-            android:drawablePadding="10dp"
-            android:layout_centerHorizontal="true"
-            android:layout_marginRight="5dp"/>
-
-        <TextView
-            android:id="@+id/pasta_dish_search"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toRightOf="@id/dessert_dish_search"
-            android:background="@drawable/button_shape_inverse"
-            android:drawableTop="@drawable/ic_vegetable_70"
-            android:drawablePadding="10dp"
-            android:layout_marginRight="5dp"/>
-
-        <TextView
-            android:id="@+id/quick_dish_search"
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginLeft="5dp"
-            android:layout_toLeftOf="@id/dessert_dish_search"
-            android:background="@drawable/button_shape_inverse"
-            android:drawableTop="@drawable/ic_vegetable_70"
-            android:drawablePadding="10dp"
-            android:layout_marginRight="5dp"/>
-    </RelativeLayout>
--->
-
-</FrameLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

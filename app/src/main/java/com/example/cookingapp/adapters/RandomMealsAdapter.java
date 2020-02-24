@@ -154,8 +154,8 @@ public class RandomMealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             holder.mealsCathegory.setText(mealChategory);
         }
         DecimalFormat df = new DecimalFormat("0.###");
-        holder.score.setText(df.format(meal.getSpoonacularScore())+ "");
-        holder.healthScore.setText(df.format(meal.getHealthScore())+"");
+        holder.score.setText(df.format(meal.getReadyInMinutes())+ " " + "min");
+        holder.healthScore.setText(df.format(meal.getServings())+ " " + "servings");
     }
 
     private void showLoadingView (RandomMealsAdapter.LoadingViewHolder viewHolder, int position){

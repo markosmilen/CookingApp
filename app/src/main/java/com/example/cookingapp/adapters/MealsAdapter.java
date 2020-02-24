@@ -18,6 +18,7 @@ import com.example.cookingapp.models.DietMealsModel;
 import com.example.cookingapp.models.Meal;
 
 import java.lang.reflect.Array;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -152,12 +153,17 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
     private void populateMeals (MealsViewHolder holder, int position){
         DietMealsModel meal = meals.get(position);
         holder.mealsTitle.setText(meal.getTitle());
-        holder.mealsCathegory.setText("Time for preparation" + " " + meal.getReadyInMinutes() + " " + "min");
-        holder.healthNum.setVisibility(View.GONE);
-        holder.healthtext.setVisibility(View.GONE);
-        holder.devider.setVisibility(View.GONE);
-        holder.scoretext.setVisibility(View.GONE);
-        holder.scoreNum.setVisibility(View.GONE);
+
+        DecimalFormat df = new DecimalFormat("0.###");
+        holder.scoreNum.setText(df.format(meal.getReadyInMinutes())+ " " + "min");
+        holder.healthtext.setText(df.format(meal.getServings())+ " " + "servings");
+
+        holder.mealsCathegory.setVisibility(View.INVISIBLE);
+    //    holder.healthNum.setVisibility(View.GONE);
+     //   holder.healthtext.setVisibility(View.GONE);
+     //   holder.devider.setVisibility(View.GONE);
+     //   holder.scoretext.setVisibility(View.GONE);
+     //   holder.scoreNum.setVisibility(View.GONE);
 
         if (meal.getImage() != null) {
             String baseurl = "https://spoonacular.com/recipeImages/";
