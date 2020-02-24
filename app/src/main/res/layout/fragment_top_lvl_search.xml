@@ -358,15 +358,24 @@
                 android:layout_height="match_parent"
                 android:layout_below="@id/search_edit_text"
                 android:layout_weight="1"
-                android:visibility="visible"
+                android:visibility="invisible"
                 android:orientation="vertical">
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/recyclerView_results"
+                    android:id="@+id/recycler_view_results"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"/>
 
             </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/search_progress_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"/>
+
+
 
     </RelativeLayout>
 
