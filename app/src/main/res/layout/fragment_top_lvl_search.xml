@@ -74,6 +74,7 @@
                         android:layout_marginRight="6dp"
                         android:orientation="vertical"
                         android:paddingBottom="10dp"
+                        android:onClick="onClick"
                         >
 
                         <ImageView
@@ -103,7 +104,8 @@
                         android:background="@drawable/search_button_curved"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        android:onClick="onClick">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -131,7 +133,8 @@
                         android:orientation="vertical"
                         android:background="@drawable/search_button_curved"
                         android:layout_marginLeft="6dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        android:onClick="onClick">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -172,6 +175,7 @@
                         android:background="@drawable/search_button_curved"
                         android:layout_marginRight="6dp"
                         android:paddingBottom="10dp"
+                        android:onClick="onClick"
                         >
 
                         <ImageView
@@ -201,7 +205,8 @@
                         android:layout_weight="1"
                         android:orientation="vertical"
                         android:background="@drawable/search_button_curved"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        android:onClick="onClick">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -229,7 +234,8 @@
                         android:orientation="vertical"
                         android:background="@drawable/search_button_curved"
                         android:layout_marginLeft="6dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        android:onClick="onClick">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -271,10 +277,10 @@
                         android:background="@drawable/search_button_curved"
                         android:layout_marginRight="6dp"
                         android:paddingBottom="10dp"
+                        android:onClick="onClick"
                         >
 
                         <ImageView
-
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:scaleType="centerInside"
@@ -301,7 +307,8 @@
                         android:background="@drawable/search_button_curved"
                         android:layout_marginLeft="3dp"
                         android:layout_marginRight="3dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        android:onClick="onClick">
 
                         <ImageView
                             android:layout_width="match_parent"
@@ -329,7 +336,8 @@
                         android:orientation="vertical"
                         android:background="@drawable/search_button_curved"
                         android:layout_marginLeft="6dp"
-                        android:paddingBottom="10dp">
+                        android:paddingBottom="10dp"
+                        android:onClick="onClick">
 
                         <ImageView
                             android:layout_width="match_parent"

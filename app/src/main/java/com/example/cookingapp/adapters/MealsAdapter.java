@@ -159,11 +159,6 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
         holder.healthtext.setText(df.format(meal.getServings())+ " " + "servings");
 
         holder.mealsCathegory.setVisibility(View.INVISIBLE);
-    //    holder.healthNum.setVisibility(View.GONE);
-     //   holder.healthtext.setVisibility(View.GONE);
-     //   holder.devider.setVisibility(View.GONE);
-     //   holder.scoretext.setVisibility(View.GONE);
-     //   holder.scoreNum.setVisibility(View.GONE);
 
         if (meal.getImage() != null) {
             String baseurl = "https://spoonacular.com/recipeImages/";

@@ -1,6 +1,7 @@
 package com.example.cookingapp.fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
@@ -17,6 +18,7 @@ import android.widget.RelativeLayout;
 import android.widget.Toolbar;
 
 import com.example.cookingapp.R;
+import com.example.cookingapp.activities.DetailsActivity;
 import com.example.cookingapp.adapters.BookmarksAdapter;
 import com.example.cookingapp.interfaces.DeleteBookmarkListener;
 import com.example.cookingapp.models.BookmarkedModel;
@@ -24,7 +26,7 @@ import com.example.cookingapp.models.BookmarkedModel;
 import java.util.List;
 
 
-public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkListener{
+public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkListener {
 
     List<BookmarkedModel> bookmarkedMeals;
     RelativeLayout noBookmarks, withBookmarks;
@@ -94,11 +96,12 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         bookmarkedMeals.remove(position);
         recyclerViewBookmarks.getRecycledViewPool().clear();
         bookmarksAdapter.notifyDataSetChanged();
-     //   bookmarksAdapter.notifyItemRemoved(position);
-        //bookmarksAdapter.notifyItemRangeChanged(0, bookmarkedMeals.size());
+    }
 
-        //bookmarksAdapter.notifyItemRangeChanged(position, bookmarkedMeals.size());
-     //  bookmarksAdapter.notifyDataSetChanged();
-
+    @Override
+    public void getMealInfo(int id) {
+        Intent detailsIntent = new Intent(getContext(), DetailsActivity.class);
+        detailsIntent.putExtra("ID", id);
+        startActivity(detailsIntent);
     }
 }

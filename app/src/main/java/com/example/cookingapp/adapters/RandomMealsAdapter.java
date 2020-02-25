@@ -133,7 +133,7 @@ public class RandomMealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         ArrayList<String> dishtype =  meal.getDishTypes();
         if (dishtype != null){
             holder.category.setText(dishtype.get(0));
-        }
+        } else {holder.category.setText("No Category");}
         if (!meal.getImage().isEmpty()) {
             String img =  meal.getImage();
             Glide.with(context).load(img).placeholder(R.drawable.placeholder).into(holder.imageView);

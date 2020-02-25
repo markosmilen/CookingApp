@@ -36,12 +36,12 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class TopLvlSearchFragment extends Fragment {
+public class TopLvlSearchFragment extends Fragment implements View.OnClickListener {
 
     LinearLayout searchFields, results_layout, pasta, vegetarian, asian, desserts, quick, chicken, fish, noGluten, salads ;
     EditText searchBar;
     String querySelected, queryString;
-    boolean isLoading, isSeachEmpty = false;
+    boolean isLoading = false;
     RecyclerView recyclerView;
     ArrayList<DietMealsModel> mealsList = new ArrayList<>();
     Gson gson;
@@ -72,14 +72,23 @@ public class TopLvlSearchFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_top_lvl_search, container, false);
         searchFields = (LinearLayout) view.findViewById(R.id.search_fields_layout);
         pasta = (LinearLayout) view.findViewById(R.id.search_pasta);
+        pasta.setOnClickListener(this);
         vegetarian = (LinearLayout) view.findViewById(R.id.search_vegetarian);
+        vegetarian.setOnClickListener(this);
         asian = (LinearLayout) view.findViewById(R.id.search_asian);
+        asian.setOnClickListener(this);
         desserts = (LinearLayout) view.findViewById(R.id.search_desserts);
+        desserts.setOnClickListener(this);
         quick = (LinearLayout) view.findViewById(R.id.search_quick);
+        quick.setOnClickListener(this);
         chicken = (LinearLayout) view.findViewById(R.id.search_chicken);
+        chicken.setOnClickListener(this);
         fish = (LinearLayout) view.findViewById(R.id.search_fish);
+        fish.setOnClickListener(this);
         noGluten = (LinearLayout) view.findViewById(R.id.search_no_gluten);
+        noGluten.setOnClickListener(this);
         salads = (LinearLayout) view.findViewById(R.id.search_salads);
+        salads.setOnClickListener(this);
         results_layout = (LinearLayout) view.findViewById(R.id.results_layout);
         searchBar = (EditText) view.findViewById(R.id.search_edit_text);
         progressBar = (ProgressBar) view.findViewById(R.id.search_progress_bar);
@@ -88,7 +97,6 @@ public class TopLvlSearchFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         gson = new Gson();
-
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -113,9 +121,6 @@ public class TopLvlSearchFragment extends Fragment {
                     searchAdapter = new SearchAdapter(mealsList, getContext());
                     recyclerView.setAdapter(searchAdapter);
                     searchAdapter.notifyDataSetChanged();
-
-
-                    //            loadMeals(queryString);
                 } else {
                     mealsList = new ArrayList<>();
                     searchFields.setVisibility(View.VISIBLE);
@@ -173,11 +178,11 @@ public class TopLvlSearchFragment extends Fragment {
                 }
             }
         });
-
     }
 
-    public void onSectionClicked(View view){
-        switch (view.getId()){
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()){
             case R.id.search_pasta:
                 querySelected = "pasta";
                 break;
@@ -205,12 +210,7 @@ public class TopLvlSearchFragment extends Fragment {
             case R.id.search_salads:
                 querySelected = "salads";
                 break;
-
-            }
-
-
-
         }
-
-
+        searchBar.setText(querySelected);
+    }
 }

@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
 import com.example.cookingapp.interfaces.DeleteBookmarkListener;
+import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.models.BookmarkedModel;
 
 import java.util.List;
@@ -22,7 +23,7 @@ import java.util.List;
 public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.BookmarkViewHolder> {
 
     Context context;
-    List<BookmarkedModel> bookmarks;
+    public List<BookmarkedModel> bookmarks;
     LayoutInflater inflater;
     DeleteBookmarkListener listener;
     int id;
@@ -71,9 +72,14 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.Book
             delete_bookmark.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if (listener != null){
-                        listener.onBookmarkDeleted(id, getAdapterPosition());
-                    }
+                    listener.onBookmarkDeleted(bookmarks.get(getAdapterPosition()).getIdentificationNum(),getAdapterPosition());
+                }
+            });
+
+            bookmarkImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.getMealInfo(bookmarks.get(getAdapterPosition()).getIdentificationNum());
                 }
             });
 
