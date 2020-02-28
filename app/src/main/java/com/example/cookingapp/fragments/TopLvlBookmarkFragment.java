@@ -76,13 +76,7 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         return  view;
     }
 
-    private void setLayoutsVisibility() {
-        if (bookmarkedMeals.isEmpty()){
-            noBookmarks.setVisibility(View.VISIBLE);
-            withBookmarks.setVisibility(View.INVISIBLE);
-        } else { noBookmarks.setVisibility(View.INVISIBLE);
-            withBookmarks.setVisibility(View.VISIBLE);}
-    }
+
 
     @Override
     public void onBookmarkDeleted(int id, int position) {
@@ -96,6 +90,7 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         bookmarkedMeals.remove(position);
         recyclerViewBookmarks.getRecycledViewPool().clear();
         bookmarksAdapter.notifyDataSetChanged();
+        setLayoutsVisibility();
     }
 
     @Override
@@ -103,5 +98,13 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         Intent detailsIntent = new Intent(getContext(), DetailsActivity.class);
         detailsIntent.putExtra("ID", id);
         startActivity(detailsIntent);
+    }
+
+    private void setLayoutsVisibility() {
+        if (bookmarkedMeals.isEmpty()){
+            noBookmarks.setVisibility(View.VISIBLE);
+            withBookmarks.setVisibility(View.INVISIBLE);
+        } else { noBookmarks.setVisibility(View.INVISIBLE);
+            withBookmarks.setVisibility(View.VISIBLE);}
     }
 }

@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
+import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.models.RecipeInformationModel;
 
 import java.util.ArrayList;
@@ -25,9 +26,11 @@ public class PopularMealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
     Context context;
     ArrayList<RecipeInformationModel> popularMeals;
     LayoutInflater inflater;
+    MealListener listener;
 
-    public PopularMealsAdapter(Context context, ArrayList<RecipeInformationModel> popularMeals) {
+    public PopularMealsAdapter(Context context, ArrayList<RecipeInformationModel> popularMeals, MealListener listener) {
         this.context = context;
+        this.listener = listener;
         this.popularMeals = popularMeals;
         this.inflater = LayoutInflater.from(context);
     }
@@ -79,6 +82,15 @@ public class PopularMealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewH
             title = itemView.findViewById(R.id.popular_item_title);
             dishType = itemView.findViewById(R.id.popular_item_chategory);
             dishIMG = itemView.findViewById(R.id.popular_item_image);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    if (popularMeals != null){
+                        listener.getMealInfo(popularMeals.get(getAdapterPosition()).getId());
+                    }
+                }
+            });
         }
     }
 

@@ -2,39 +2,39 @@ package com.example.cookingapp.models;
 
 public class NutritionModel {
 
-    int calories, carbs, fat, protein;
+    String calories, carbs, fat, protein;
 
     NutritionModel(){}
 
-    public int getCalories() {
+    public String getCalories() {
         return calories;
     }
 
-    public void setCalories(int calories) {
+    public void setCalories(String calories) {
         this.calories = calories;
     }
 
-    public int getCarbs() {
+    public String getCarbs() {
         return carbs;
     }
 
-    public void setCarbs(int carbs) {
+    public void setCarbs(String carbs) {
         this.carbs = carbs;
     }
 
-    public int getFat() {
+    public String getFat() {
         return fat;
     }
 
-    public void setFat(int fat) {
+    public void setFat(String fat) {
         this.fat = fat;
     }
 
-    public int getProtein() {
+    public String getProtein() {
         return protein;
     }
 
-    public void setProtein(int protein) {
+    public void setProtein(String protein) {
         this.protein = protein;
     }
 }

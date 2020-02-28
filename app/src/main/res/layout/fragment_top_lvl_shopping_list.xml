@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".fragments.TopLvlShoppingListFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/shopping_cover"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/shopping_background"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@android:color/black"
+            android:alpha="0.1"/>
+
+        <TextView
+            android:id="@+id/list_size"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="21 Recipes"
+            android:textSize="18sp"
+            android:layout_below="@id/shopping_cover"
+            android:paddingLeft="20dp"
+            android:paddingRight="20dp"
+            android:paddingBottom="10dp"
+            android:paddingTop="10dp"
+            android:drawableEnd="@drawable/ic_right"/>
+
+        <View
+            android:id="@+id/devider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@color/colorGray"
+            android:layout_below="@id/list_size"/>
+
+        <TextView
+            android:id="@+id/ingridients_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="ingredients you need"
+            android:textAllCaps="true"
+            android:paddingLeft="20dp"
+            android:paddingTop="10dp"
+            android:paddingBottom="5dp"
+            android:textColor="@color/colorGray"
+            android:layout_below="@id/devider"
+            android:background="#E7E7E7"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/ingridients_title"
+            android:layout_marginTop="1dp" />
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

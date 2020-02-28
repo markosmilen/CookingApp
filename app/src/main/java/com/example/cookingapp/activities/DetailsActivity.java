@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -17,8 +18,13 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.MealDeatilsPagerAdapter;
+import com.example.cookingapp.interfaces.IngredientsListener;
 import com.example.cookingapp.models.BookmarkedModel;
+import com.example.cookingapp.models.CookedModel;
+import com.example.cookingapp.models.IngredientsAndValueModel;
+import com.example.cookingapp.models.NutritionModel;
 import com.example.cookingapp.models.RecipeInformationModel;
+import com.example.cookingapp.models.ShoppingListModel;
 import com.example.cookingapp.models.SummerizeRecipeModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
@@ -38,25 +44,26 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class DetailsActivity extends AppCompatActivity {
+public class DetailsActivity extends AppCompatActivity implements IngredientsListener {
 
     ImageView mealImg;
-    TextView name, servings, time, ratingText;
+    TextView name, servings, time, ratingText, cooked, uncoocked, calories, protein, carbs, fat, shoppingList;
     HtmlTextView summary;
+    NutritionModel model;
     MealDeatilsPagerAdapter adapter;
     TabLayout tabLayout;
     ViewPager viewPager;
     int id;
     Gson gson;
-    SummerizeRecipeModel model;
     RecipeInformationModel recepiInfo;
-    Boolean isBookmarked = false;
+    Boolean isBookmarked, isCoocked = false;
     String mealName, imgUrl;
-    ArrayList<BookmarkedModel> bookmarks = new ArrayList<>();
-    ProgressBar progressBar;
+    ProgressBar progressBar, shopping_progress;
     LinearLayout linearLayout;
     RatingBar ratingBar;
     Button bookmarked;
+    ArrayList<NutritionModel> nutritients = new ArrayList<>();
+    ArrayList<IngredientsAndValueModel> ingredients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -69,24 +76,33 @@ public class DetailsActivity extends AppCompatActivity {
         summary = (HtmlTextView) findViewById(R.id.recipe_summary);
         servings = (TextView) findViewById(R.id.servings);
         time = (TextView) findViewById(R.id.prep_time);
+        cooked = (TextView) findViewById(R.id.coocked_meal_button);
+        uncoocked = (TextView) findViewById(R.id.undo_cooked_meal);
+        calories = (TextView) findViewById(R.id.calories);
+        carbs = (TextView) findViewById(R.id.carbs);
+        protein = (TextView) findViewById(R.id.protein);
+        fat = (TextView) findViewById(R.id.fat);
+        shoppingList = (TextView) findViewById(R.id.add_shopping_list);
+
         bookmarked = (Button) findViewById(R.id.bookmark_button);
         viewPager = (ViewPager) findViewById(R.id.viewPagerIngredients);
         progressBar = (ProgressBar) findViewById(R.id.progress_details);
+        shopping_progress = (ProgressBar) findViewById(R.id.shopping_progress);
         linearLayout = (LinearLayout) findViewById(R.id.details_layout);
         ratingBar = (RatingBar) findViewById(R.id.ratingbar);
-        ratingBar.setMax(5);
-        ratingBar.setNumStars(5);
-        ratingBar.setStepSize(0.1f);
+        loadRating();
 
         gson = new Gson();
 
         id = getIntent().getIntExtra("ID", 0);
         tabLayout = (TabLayout) findViewById(R.id.meal_detail_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"));
-        tabLayout.addTab(tabLayout.newTab().setText("Instructions"));
+        tabLayout.addTab(tabLayout.newTab().setText("Equipment"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
         getRecipeInformation(id);
+        getRecipeNutrition(id);
         isBookmarked = isMealBookmarked(id);
+        isCoocked = isMealCooked(id);
 
         final MealDeatilsPagerAdapter pagerAdapter = new MealDeatilsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), id+"");
         viewPager.setAdapter(pagerAdapter);
@@ -176,6 +192,22 @@ public class DetailsActivity extends AppCompatActivity {
         }
     }
 
+    public void onCoockedMealClicked(View view) {
+        if(!isCoocked){
+            isCoocked = true;
+            CookedModel model = new CookedModel(id, imgUrl, mealName);
+            model.save();
+            cooked.setVisibility(View.INVISIBLE);
+            uncoocked.setVisibility(View.VISIBLE);
+        } else {
+            isCoocked = false;
+            CookedModel.deleteAll(CookedModel.class);
+
+            cooked.setVisibility(View.VISIBLE);
+            uncoocked.setVisibility(View.INVISIBLE);
+        }
+    }
+
     public boolean isMealBookmarked(int id){
 
         List <BookmarkedModel> bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
@@ -192,5 +224,102 @@ public class DetailsActivity extends AppCompatActivity {
             }
         }
         return check;
+    }
+
+    public boolean isMealCooked (int id){
+        List<CookedModel> cookedMeals = CookedModel.listAll(CookedModel.class);
+        boolean checkCooked = false;
+
+        if (cookedMeals != null){
+            for (int i=1; i<cookedMeals.size(); i++){
+                CookedModel cookMeal = cookedMeals.get(i);
+                int identNum = cooked.getId();
+                if(identNum == id){
+                    checkCooked = true;
+                    cooked.setVisibility(View.VISIBLE);
+                    uncoocked.setVisibility(View.INVISIBLE);
+                }
+            }
+        }
+        return checkCooked;
+    }
+
+    public void loadRating(){
+        ratingBar.setMax(5);
+        ratingBar.setNumStars(5);
+        ratingBar.setStepSize(0.1f);
+    }
+
+    public void getRecipeNutrition(int id){
+        HttpUrl url = new HttpUrl.Builder()
+                .scheme("https")
+                .host("api.spoonacular.com")
+                .addPathSegment("recipes")
+                .addPathSegment(id +"")
+                .addPathSegment("nutritionWidget.json")
+                .addQueryParameter("apiKey", "538bac8dcbdc467c9c1683802b57809b").build();
+
+        OkHttpClient client = new OkHttpClient();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .build();
+
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NotNull Call call, @NotNull IOException e) {
+            }
+
+            @Override
+            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
+                if (response.isSuccessful()){
+                    String jsonString = response.body().string();
+                    model = gson.fromJson(jsonString, NutritionModel.class);
+                    String caloriesText = model.getCalories() +"";
+                    Log.d("CALORIES", caloriesText);
+                    DetailsActivity.this.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            calories.setText(model.getCalories());
+                            carbs.setText(model.getCarbs());
+                            fat.setText(model.getFat());
+                            protein.setText(model.getProtein());
+                        }
+                    });
+
+                }
+            }
+        });
+    }
+
+    public void onAddToShoppingCartClicked (View view){
+        shoppingList.setVisibility(View.INVISIBLE);
+        shopping_progress.setVisibility(View.VISIBLE);
+
+        final Handler handler = new Handler();
+        final Runnable r = new Runnable() {
+            @Override
+            public void run() {
+                shoppingList.setVisibility(View.VISIBLE);
+                shopping_progress.setVisibility(View.INVISIBLE);
+                Toast.makeText(DetailsActivity.this, "Ingridients added to shopping cart", Toast.LENGTH_SHORT).show();
+
+                for (int i = 0; i<ingredients.size(); i++){
+                    IngredientsAndValueModel model = ingredients.get(i);
+                    double ingredientValue = model.getAmount().getMetric().getValue();
+                    String ingredientUnit = model.getAmount().getMetric().getUnit();
+                    String ingredientName = model.getName();
+                    ShoppingListModel cart = new ShoppingListModel(id, ingredientValue,ingredientUnit, ingredientName);
+                    cart.save();
+                }
+            }
+        };
+        handler.postDelayed(r,1500);
+
+    }
+
+    @Override
+    public void passIngredients(ArrayList<IngredientsAndValueModel> ingridiens) {
+        this.ingredients=ingridiens;
     }
 }

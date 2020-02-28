@@ -12,6 +12,7 @@ import com.example.cookingapp.R;
 import com.example.cookingapp.fragments.TopLvlBookmarkFragment;
 import com.example.cookingapp.fragments.TopLvlFeaturedFragment;
 import com.example.cookingapp.fragments.TopLvlSearchFragment;
+import com.example.cookingapp.fragments.TopLvlShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
 public class BrowoseActivity extends AppCompatActivity implements BottomNavigationView.OnNavigationItemSelectedListener {
@@ -42,7 +43,7 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
                 showTopLevelFragment(new TopLvlBookmarkFragment());
                 break;
             case R.id.cookbook_nav:
-
+                showTopLevelFragment(new TopLvlShoppingListFragment());
                 break;
         }
         return false;

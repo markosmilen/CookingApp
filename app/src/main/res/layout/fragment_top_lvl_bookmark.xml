@@ -11,8 +11,8 @@
         android:id="@+id/bookmark_layout_no_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/color_primaryLight"
-       android:visibility="visible">
+        android:background="@color/primary_background"
+        android:visibility="visible">
 
          <ImageButton
              android:id="@+id/add_button"

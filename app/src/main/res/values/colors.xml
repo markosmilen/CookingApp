@@ -8,7 +8,10 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorTransparent">@android:color/transparent</color>
     <color name="search_bar_color">#F1F1F1</color>
-    <color name="color_primaryLight">#FCE7D5</color>
+    <color name="color_primaryLight">#F0D1C1</color>
     <color name="color_text_ingridients_light_black">#494949</color>
+    <color name="color_primaryDark">#9E836E</color>
+    <color name="primary_background">#F3EBE3</color>
+
 
 </resources>

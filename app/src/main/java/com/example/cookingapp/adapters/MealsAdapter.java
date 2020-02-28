@@ -98,7 +98,7 @@ public class MealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> 
             itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    listener.getMealInfo(meals.get(getAdapterPosition()).getId());
+                    listener.getMealInfo(meals.get(0).getId());
                 }
             });
         }

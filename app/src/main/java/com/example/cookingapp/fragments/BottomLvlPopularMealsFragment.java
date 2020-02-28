@@ -1,5 +1,6 @@
 package com.example.cookingapp.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
@@ -15,7 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cookingapp.R;
+import com.example.cookingapp.activities.DetailsActivity;
 import com.example.cookingapp.adapters.PopularMealsAdapter;
+import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.models.RandomResponceModel;
 import com.example.cookingapp.models.RecipeInformationModel;
 import com.google.gson.Gson;
@@ -32,7 +35,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
 
-public class BottomLvlPopularMealsFragment extends Fragment {
+public class BottomLvlPopularMealsFragment extends Fragment implements MealListener {
 
     public static final String TAG = BottomLvlPopularMealsFragment.class.getSimpleName();
 
@@ -62,7 +65,7 @@ public class BottomLvlPopularMealsFragment extends Fragment {
         gson = new Gson();
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_popular_meals);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        popularAdapter = new PopularMealsAdapter(getContext(), popularMeals);
+        popularAdapter = new PopularMealsAdapter(getContext(), popularMeals, this);
         recyclerView.setAdapter(popularAdapter);
         generatePopularMeals(offset);
         initScrollListener();
@@ -157,5 +160,12 @@ public class BottomLvlPopularMealsFragment extends Fragment {
                 }
             }
         });
+    }
+
+    @Override
+    public void getMealInfo(int id) {
+        Intent detailsIntent = new Intent(getContext(), DetailsActivity.class);
+        detailsIntent.putExtra("ID", id);
+        startActivity(detailsIntent);
     }
 }

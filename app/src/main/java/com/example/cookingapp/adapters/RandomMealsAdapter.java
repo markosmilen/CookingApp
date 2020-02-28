@@ -124,6 +124,13 @@ public class RandomMealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
             imageView = (ImageView) itemView.findViewById(R.id.top_item_image);
             title = (TextView) itemView.findViewById(R.id.top_item_title);
             category = (TextView) itemView.findViewById(R.id.top_item_category);
+
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.getMealInfo(meals.get(0).getId());
+                }
+            });
         }
     }
 

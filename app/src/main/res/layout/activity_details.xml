@@ -7,6 +7,7 @@
     android:layout_width="match_parent"
     tools:context=".activities.DetailsActivity">
 
+    <!-- parrent scroll view for all content -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -17,7 +18,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
-
+            <!-- if loaded will display info -->
             <LinearLayout
                 android:id="@+id/details_layout"
                 android:layout_width="match_parent"
@@ -46,6 +47,7 @@
                     android:paddingTop="20dp"
                     android:paddingBottom="10dp"/>
 
+                <!-- layout for rating and bookmark -->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -102,6 +104,7 @@
                     android:layout_marginBottom="20dp"
                     android:background="@color/color_primary" />
 
+                <!-- parrent layout for servings and prepTime-->
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -109,6 +112,7 @@
                     android:paddingRight="20dp"
                     android:paddingLeft="20dp">
 
+                    <!-- layout for servings -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -119,7 +123,8 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Servings"
-                            android:textColor="@color/color_primary"
+                            android:textSize="12sp"
+                            android:textColor="@color/colorGray"
                             android:paddingBottom="5dp"/>
 
                         <TextView
@@ -128,10 +133,12 @@
                             android:layout_height="wrap_content"
                             android:text="2SS"
                             android:textColor="@android:color/black"
-                            android:textSize="24sp"/>
+                            android:textAllCaps="true"
+                            android:textSize="18sp"/>
 
                     </LinearLayout>
 
+                    <!-- layout for time preparation -->
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -160,7 +167,10 @@
                 <TextView
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:text="Summary:"
+                    android:text="Instructions:"
+                    android:textColor="@android:color/black"
+                    android:textSize="18dp"
+                    android:textStyle="bold"
                     android:layout_margin="20dp"/>
 
                 <org.sufficientlysecure.htmltextview.HtmlTextView
@@ -188,27 +198,176 @@
                     android:layout_width="match_parent"
                     android:layout_height="300dp"
                     app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                    android:layout_marginBottom="10dp"
-                    >
+                    android:layout_marginBottom="10dp"/>
 
-                </androidx.viewpager.widget.ViewPager>
+                <!-- this Layout is for shopping cart button -->
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <Button
-                    android:id="@+id/add_shopping_list"
+                    <Button
+                        android:id="@+id/add_shopping_list"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:text="@string/add_shoping_list"
+                        android:gravity="center"
+                        android:paddingStart="30dp"
+                        android:drawableStart="@drawable/ic_cart"
+                        android:textColor="@color/color_primary"
+                        android:drawableTint="@color/color_primary"
+                        android:background="@drawable/add_to_shop_list_shape"
+                        android:onClick="onAddToShoppingCartClicked"
+                        />
+
+                    <ProgressBar
+                        android:id="@+id/shopping_progress"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_margin="15dp"
+                        android:gravity="center_horizontal"
+                        android:visibility="invisible"
+                        />
+
+                </RelativeLayout>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/colorPrimary"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="5dp"/>
+
+                <!-- this Layout is for nutritient facts -->
+                <LinearLayout
+                    android:id="@+id/nutritient_layout"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="10dp"
-                    android:text="Add to Shopping List"
-                    android:gravity="center"
-                    android:paddingLeft="30dp"
-                    android:drawableLeft="@drawable/ic_cart"
-                    android:textColor="@color/color_primary"
-                    android:drawableTint="@color/color_primary"
-                    android:background="@drawable/add_to_shop_list_shape"/>
+                    android:orientation="horizontal"
+                    android:layout_gravity="center"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="20dp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/calories"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CALORIES"
+                            android:textColor="@color/colorGray"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/protein"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="PROTEIN"
+                            android:textColor="@color/colorGray"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical">
+
+                        <TextView
+                            android:id="@+id/carbs"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="CARBS"
+                            android:textColor="@color/colorGray"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+
+                    <View
+                        android:layout_width="1dp"
+                        android:layout_height="match_parent"
+                        android:background="@color/colorPrimary"/>
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:orientation="vertical"
+                        >
+
+                        <TextView
+                            android:id="@+id/fat"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:textColor="@android:color/black"
+                            android:textStyle="bold"
+                            android:textSize="16sp"
+                            android:layout_gravity="center"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="FAT"
+                            android:textColor="@color/colorGray"
+                            android:textSize="12sp"
+                            android:layout_gravity="center"/>
+
+                    </LinearLayout>
+                </LinearLayout>
 
             </LinearLayout>
-            <!-- -->
+
+            <!-- if loading will display progress bar -->
             <ProgressBar
                 android:id="@+id/progress_details"
                 android:layout_width="wrap_content"
@@ -220,10 +379,11 @@
         </RelativeLayout>
     </ScrollView>
 
+    <!-- set meal as cooked -->
     <TextView
         android:id="@+id/coocked_meal_button"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="65dp"
         android:padding="20dp"
         android:background="@color/color_primary"
         android:text="I've cooked this meal"
@@ -231,7 +391,29 @@
         android:textColor="@color/colorWhite"
         android:textStyle="bold"
         android:textSize="17sp"
-        android:layout_alignParentBottom="true"/>
+        android:visibility="visible"
+        android:layout_alignParentBottom="true"
+        android:onClick="onCoockedMealClicked"/>
+
+    <!-- undo set meal as cooked -->
+    <TextView
+        android:id="@+id/undo_cooked_meal"
+        android:layout_width="match_parent"
+        android:layout_height="65dp"
+        android:padding="10dp"
+        android:background="@drawable/background_undo_cooked_meal"
+        android:drawableTint="@color/color_primary"
+        android:paddingLeft="20dp"
+        android:drawablePadding="20dp"
+        android:drawableLeft="@drawable/ic_chef"
+        android:text="Marked as Cooked. Click again to UNDO"
+        android:gravity="center"
+        android:textColor="@color/colorGray"
+        android:textStyle="bold"
+        android:textSize="14sp"
+        android:visibility="invisible"
+        android:layout_alignParentBottom="true"
+        android:onClick="onCoockedMealClicked"/>
 
 </RelativeLayout>
 
