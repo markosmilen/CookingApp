@@ -1,5 +1,6 @@
 package com.example.cookingapp.fragments;
 
+import android.content.Context;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
@@ -14,8 +15,8 @@ import android.view.ViewGroup;
 
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.IngridientsAdapter;
+import com.example.cookingapp.interfaces.IngredientsListener;
 import com.example.cookingapp.models.IngredientsAndValueModel;
-import com.example.cookingapp.models.IngredientsModel;
 import com.example.cookingapp.models.RecepieIngridientsModel;
 import com.google.gson.Gson;
 
@@ -23,7 +24,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -33,24 +33,29 @@ import okhttp3.Request;
 import okhttp3.Response;
 
 
-public class IngridientsFragment extends Fragment {
+public class IngredientsFragment extends Fragment {
 
+    public static final String TAG = IngredientsFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "ID";
 
-    ArrayList<IngredientsAndValueModel> ingridiens = new ArrayList<>();
+    private
+
+    ArrayList<IngredientsAndValueModel> ingrediens = new ArrayList<>();
     RecyclerView recycler;
     IngridientsAdapter adapter;
+    IngredientsListener listener;
     private String id;
     ViewPager pager;
     Gson gson;
 
 
-    public IngridientsFragment() {
+    public IngredientsFragment() {
         // Required empty public constructor
     }
 
-    public static IngridientsFragment newInstance(String id) {
-        IngridientsFragment fragment = new IngridientsFragment();
+    public static IngredientsFragment newInstance(String id) {
+        IngredientsFragment fragment = new IngredientsFragment();
+
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, id);
         fragment.setArguments(args);
@@ -65,6 +70,8 @@ public class IngridientsFragment extends Fragment {
         }
     }
 
+
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
@@ -75,12 +82,15 @@ public class IngridientsFragment extends Fragment {
         pager = (ViewPager) view.findViewById(R.id.viewPagerIngredients);
         recycler = (RecyclerView) view.findViewById(R.id.recycler_view_ingridients);
 
-      //  getIngridients(id);
         poulateIngridients(id);
         recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-        adapter = new IngridientsAdapter(getContext(), ingridiens);
+        adapter = new IngridientsAdapter(getContext(), ingrediens);
         recycler.setAdapter(adapter);
         return view;
+    }
+
+    public ArrayList<IngredientsAndValueModel> passList(){
+        return ingrediens;
     }
 
     private void poulateIngridients(String id) {
@@ -102,13 +112,14 @@ public class IngridientsFragment extends Fragment {
                     String jsonString = response.body().string();
                     Log.d("THISISTHE", jsonString);
                     RecepieIngridientsModel model = gson.fromJson(jsonString, RecepieIngridientsModel.class);
-                    ingridiens = model.getIngredients();
+                    ingrediens = model.getIngredients();
+                    listener.passIngredients(ingrediens);
 
                     getActivity().runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-                            adapter = new IngridientsAdapter(getContext(), ingridiens);
+                            adapter = new IngridientsAdapter(getContext(), ingrediens);
                             recycler.setAdapter(adapter);
                             adapter.notifyDataSetChanged();
                         }
@@ -117,4 +128,17 @@ public class IngridientsFragment extends Fragment {
             }
         });
     }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        listener = (IngredientsListener) getActivity();
+    }
+
+    @Override
+    public void onDetach() {
+        super.onDetach();
+        listener = null;
+    }
+
 }

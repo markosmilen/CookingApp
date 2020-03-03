@@ -138,7 +138,7 @@ public class RandomMealsAdapter extends RecyclerView.Adapter<RecyclerView.ViewHo
         RecipeInformationModel meal = meals.get(position);
         holder.title.setText(meal.getTitle());
         ArrayList<String> dishtype =  meal.getDishTypes();
-        if (dishtype != null){
+        if (dishtype != null && dishtype.size() != 0){
             holder.category.setText(dishtype.get(0));
         } else {holder.category.setText("No Category");}
         if (!meal.getImage().isEmpty()) {

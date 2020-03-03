@@ -43,6 +43,13 @@
             android:background="@color/colorGray"
             android:layout_below="@id/list_size"/>
 
+        <Button
+            android:id="@+id/delete_button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="DELETE ALL"
+            android:layout_below="@id/ingridients_title"/>
+
         <TextView
             android:id="@+id/ingridients_title"
             android:layout_width="match_parent"
@@ -57,6 +64,7 @@
             android:background="#E7E7E7"/>
 
         <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_shopping"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/ingridients_title"

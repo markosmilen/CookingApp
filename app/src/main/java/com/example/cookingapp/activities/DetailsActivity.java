@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.MealDeatilsPagerAdapter;
+import com.example.cookingapp.fragments.IngredientsFragment;
 import com.example.cookingapp.interfaces.IngredientsListener;
 import com.example.cookingapp.models.BookmarkedModel;
 import com.example.cookingapp.models.CookedModel;
@@ -25,7 +26,6 @@ import com.example.cookingapp.models.IngredientsAndValueModel;
 import com.example.cookingapp.models.NutritionModel;
 import com.example.cookingapp.models.RecipeInformationModel;
 import com.example.cookingapp.models.ShoppingListModel;
-import com.example.cookingapp.models.SummerizeRecipeModel;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
 
@@ -56,40 +56,19 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     int id;
     Gson gson;
     RecipeInformationModel recepiInfo;
-    Boolean isBookmarked, isCoocked = false;
+    Boolean isBookmarked, isCooked = false;
     String mealName, imgUrl;
     ProgressBar progressBar, shopping_progress;
     LinearLayout linearLayout;
     RatingBar ratingBar;
     Button bookmarked;
-    ArrayList<NutritionModel> nutritients = new ArrayList<>();
     ArrayList<IngredientsAndValueModel> ingredients = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_details);
-
-        mealImg = (ImageView) findViewById(R.id.meal_details_img);
-        name = (TextView) findViewById(R.id.meal_details_title);
-        ratingText = (TextView) findViewById(R.id.rating_text);
-        summary = (HtmlTextView) findViewById(R.id.recipe_summary);
-        servings = (TextView) findViewById(R.id.servings);
-        time = (TextView) findViewById(R.id.prep_time);
-        cooked = (TextView) findViewById(R.id.coocked_meal_button);
-        uncoocked = (TextView) findViewById(R.id.undo_cooked_meal);
-        calories = (TextView) findViewById(R.id.calories);
-        carbs = (TextView) findViewById(R.id.carbs);
-        protein = (TextView) findViewById(R.id.protein);
-        fat = (TextView) findViewById(R.id.fat);
-        shoppingList = (TextView) findViewById(R.id.add_shopping_list);
-
-        bookmarked = (Button) findViewById(R.id.bookmark_button);
-        viewPager = (ViewPager) findViewById(R.id.viewPagerIngredients);
-        progressBar = (ProgressBar) findViewById(R.id.progress_details);
-        shopping_progress = (ProgressBar) findViewById(R.id.shopping_progress);
-        linearLayout = (LinearLayout) findViewById(R.id.details_layout);
-        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+        initView();
         loadRating();
 
         gson = new Gson();
@@ -102,12 +81,13 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         getRecipeInformation(id);
         getRecipeNutrition(id);
         isBookmarked = isMealBookmarked(id);
-        isCoocked = isMealCooked(id);
+        isCooked = isMealCooked(id);
 
         final MealDeatilsPagerAdapter pagerAdapter = new MealDeatilsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), id+"");
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
@@ -193,14 +173,14 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     }
 
     public void onCoockedMealClicked(View view) {
-        if(!isCoocked){
-            isCoocked = true;
+        if(!isCooked){
+            isCooked = true;
             CookedModel model = new CookedModel(id, imgUrl, mealName);
             model.save();
             cooked.setVisibility(View.INVISIBLE);
             uncoocked.setVisibility(View.VISIBLE);
         } else {
-            isCoocked = false;
+            isCooked = false;
             CookedModel.deleteAll(CookedModel.class);
 
             cooked.setVisibility(View.VISIBLE);
@@ -296,13 +276,14 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         shoppingList.setVisibility(View.INVISIBLE);
         shopping_progress.setVisibility(View.VISIBLE);
 
+
         final Handler handler = new Handler();
         final Runnable r = new Runnable() {
             @Override
             public void run() {
                 shoppingList.setVisibility(View.VISIBLE);
                 shopping_progress.setVisibility(View.INVISIBLE);
-                Toast.makeText(DetailsActivity.this, "Ingridients added to shopping cart", Toast.LENGTH_SHORT).show();
+                Toast.makeText(DetailsActivity.this, "Ingrеdients added to shopping cart", Toast.LENGTH_SHORT).show();
 
                 for (int i = 0; i<ingredients.size(); i++){
                     IngredientsAndValueModel model = ingredients.get(i);
@@ -315,11 +296,34 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
             }
         };
         handler.postDelayed(r,1500);
-
     }
 
+    private void initView(){
+        mealImg = (ImageView) findViewById(R.id.meal_details_img);
+        name = (TextView) findViewById(R.id.meal_details_title);
+        ratingText = (TextView) findViewById(R.id.rating_text);
+        summary = (HtmlTextView) findViewById(R.id.recipe_summary);
+        servings = (TextView) findViewById(R.id.servings);
+        time = (TextView) findViewById(R.id.prep_time);
+        cooked = (TextView) findViewById(R.id.coocked_meal_button);
+        uncoocked = (TextView) findViewById(R.id.undo_cooked_meal);
+        calories = (TextView) findViewById(R.id.calories);
+        carbs = (TextView) findViewById(R.id.carbs);
+        protein = (TextView) findViewById(R.id.protein);
+        fat = (TextView) findViewById(R.id.fat);
+        shoppingList = (TextView) findViewById(R.id.add_shopping_list);
+        bookmarked = (Button) findViewById(R.id.bookmark_button);
+        viewPager = (ViewPager) findViewById(R.id.viewPagerIngredients);
+        progressBar = (ProgressBar) findViewById(R.id.progress_details);
+        shopping_progress = (ProgressBar) findViewById(R.id.shopping_progress);
+        linearLayout = (LinearLayout) findViewById(R.id.details_layout);
+        ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+//        ingredientsFragment = adapter.getre();
+    }
+
+
     @Override
-    public void passIngredients(ArrayList<IngredientsAndValueModel> ingridiens) {
-        this.ingredients=ingridiens;
+    public void passIngredients(ArrayList<IngredientsAndValueModel> passedIngredients) {
+        ingredients = passedIngredients;
     }
 }

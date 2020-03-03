@@ -1,34 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="horizontal" android:layout_width="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingLeft="20dp">
 
     <TextView
         android:id="@+id/shpping_ingredient_amount"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="2"
         android:text="50 ml"
         android:textStyle="bold"
         android:textColor="@android:color/black"
-        android:paddingBottom="10dp"
-        android:paddingTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        />
 
     <TextView
         android:id="@+id/shopping_ingredient_name"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1"
         android:text="almond milk (unsweetend)"
         android:textColor="@color/colorGray"
-        android:paddingBottom="10dp"
-        android:paddingLeft="5dp"
-        android:paddingTop="10dp" />
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+         />
 
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         >
 
         <ImageView
@@ -38,7 +41,8 @@
             android:src="@drawable/ic_circle"
             android:paddingLeft="5dp"
             android:paddingRight="5dp"
-            android:tint="@color/colorGray"/>
+            android:tint="@color/colorGray"
+            android:layout_margin="5dp"/>
 
         <ImageView
             android:id="@+id/ingredient_checked"
@@ -46,9 +50,11 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_checked"
             android:paddingLeft="5dp"
-            android:paddingRight="5dp"
+            android:paddingRight="20dp"
             android:visibility="invisible"
-            android:tint="@color/colorPrimary"/>
+            android:tint="@color/colorPrimary"
+            android:layout_margin="5dp"
+            />
 
     </RelativeLayout>
 </LinearLayout>

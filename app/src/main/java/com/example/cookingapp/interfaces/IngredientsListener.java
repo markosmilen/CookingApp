@@ -6,6 +6,6 @@ import java.util.ArrayList;
 
 public interface IngredientsListener {
 
-    void passIngredients(ArrayList<IngredientsAndValueModel> ingridiens);
+    void passIngredients(ArrayList<IngredientsAndValueModel> ingredients);
 
 }
