@@ -5,6 +5,7 @@ import androidx.viewpager.widget.ViewPager;
 
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Parcelable;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -26,8 +27,11 @@ import com.example.cookingapp.models.IngredientsAndValueModel;
 import com.example.cookingapp.models.NutritionModel;
 import com.example.cookingapp.models.RecipeInformationModel;
 import com.example.cookingapp.models.ShoppingListModel;
+import com.example.cookingapp.models.ShoppingRecipe;
 import com.google.android.material.tabs.TabLayout;
 import com.google.gson.Gson;
+import com.orm.query.Condition;
+import com.orm.query.Select;
 
 import org.jetbrains.annotations.NotNull;
 import org.sufficientlysecure.htmltextview.HtmlAssetsImageGetter;
@@ -53,7 +57,7 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     MealDeatilsPagerAdapter adapter;
     TabLayout tabLayout;
     ViewPager viewPager;
-    int id;
+    int mealID;
     Gson gson;
     RecipeInformationModel recepiInfo;
     Boolean isBookmarked, isCooked = false;
@@ -62,6 +66,8 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     LinearLayout linearLayout;
     RatingBar ratingBar;
     Button bookmarked;
+    List <BookmarkedModel> bookmarkedMeals;
+    List<CookedModel> cookedMeals;
     ArrayList<IngredientsAndValueModel> ingredients = new ArrayList<>();
 
     @Override
@@ -73,17 +79,18 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
 
         gson = new Gson();
 
-        id = getIntent().getIntExtra("ID", 0);
+        mealID = getIntent().getIntExtra("ID", 0);
         tabLayout = (TabLayout) findViewById(R.id.meal_detail_tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Ingredients"));
         tabLayout.addTab(tabLayout.newTab().setText("Equipment"));
         tabLayout.setTabGravity(TabLayout.GRAVITY_FILL);
-        getRecipeInformation(id);
-        getRecipeNutrition(id);
-        isBookmarked = isMealBookmarked(id);
-        isCooked = isMealCooked(id);
+        getRecipeInformation(mealID);
+        getRecipeNutrition(mealID);
+        isBookmarked = isMealBookmarked(mealID);
+        isCooked = isMealCooked(mealID);
 
-        final MealDeatilsPagerAdapter pagerAdapter = new MealDeatilsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), id+"");
+
+        final MealDeatilsPagerAdapter pagerAdapter = new MealDeatilsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mealID+"");
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
         viewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
@@ -158,7 +165,7 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     public void onBookmarkClicked(View view) {
         if(!isBookmarked){
             isBookmarked = true;
-            BookmarkedModel bookmark = new BookmarkedModel(id, imgUrl, mealName);
+            BookmarkedModel bookmark = new BookmarkedModel(mealID, imgUrl, mealName);
             Log.d("GOT_ID", bookmark.getIdentificationNum() + "");
             bookmark.save();
             bookmarked.setBackgroundResource(R.drawable.ic_bookmarked);
@@ -166,31 +173,48 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
 
         } else {
             isBookmarked = false;
-            BookmarkedModel.deleteAll(BookmarkedModel.class);
+            if(bookmarkedMeals != null){
+                for (int i=0; i<bookmarkedMeals.size(); i++){
+                    BookmarkedModel deleteModel = bookmarkedMeals.get(i);
+                    int identNum = deleteModel.getIdentificationNum();
+                    if (identNum == mealID){
+                        deleteModel.delete();
+                    }
+                }
+            }
+
             bookmarked.setBackgroundResource(R.drawable.ic_not_bookmarked);
             Toast.makeText(this, "NOW IT IS NOT", Toast.LENGTH_SHORT).show();
         }
     }
-
-    public void onCoockedMealClicked(View view) {
+/*
+    public void onCookedMealClicked(View view) {
         if(!isCooked){
             isCooked = true;
-            CookedModel model = new CookedModel(id, imgUrl, mealName);
+            CookedModel model = new CookedModel(mealID, imgUrl, mealName);
             model.save();
             cooked.setVisibility(View.INVISIBLE);
             uncoocked.setVisibility(View.VISIBLE);
         } else {
             isCooked = false;
-            CookedModel.deleteAll(CookedModel.class);
+            if(cookedMeals != null){
+                for (int i=0; i<cookedMeals.size(); i++){
+                    CookedModel deleteModel = cookedMeals.get(i);
+                    int identNum = deleteModel.getIdentificationNum();
+                    if (identNum == mealID){
+                        deleteModel.delete();
+                    }
+                }
+            }
 
             cooked.setVisibility(View.VISIBLE);
             uncoocked.setVisibility(View.INVISIBLE);
         }
     }
-
+*/
     public boolean isMealBookmarked(int id){
 
-        List <BookmarkedModel> bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
+        bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
         boolean check = false;
 
         if (bookmarkedMeals != null){
@@ -207,17 +231,17 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     }
 
     public boolean isMealCooked (int id){
-        List<CookedModel> cookedMeals = CookedModel.listAll(CookedModel.class);
+        cookedMeals = CookedModel.listAll(CookedModel.class);
         boolean checkCooked = false;
 
         if (cookedMeals != null){
             for (int i=1; i<cookedMeals.size(); i++){
                 CookedModel cookMeal = cookedMeals.get(i);
-                int identNum = cooked.getId();
+                int identNum = cookMeal.getIdentificationNum();
                 if(identNum == id){
                     checkCooked = true;
-                    cooked.setVisibility(View.VISIBLE);
-                    uncoocked.setVisibility(View.INVISIBLE);
+                    cooked.setVisibility(View.INVISIBLE);
+                    uncoocked.setVisibility(View.VISIBLE);
                 }
             }
         }
@@ -276,7 +300,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         shoppingList.setVisibility(View.INVISIBLE);
         shopping_progress.setVisibility(View.VISIBLE);
 
-
         final Handler handler = new Handler();
         final Runnable r = new Runnable() {
             @Override
@@ -284,13 +307,15 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                 shoppingList.setVisibility(View.VISIBLE);
                 shopping_progress.setVisibility(View.INVISIBLE);
                 Toast.makeText(DetailsActivity.this, "Ingrеdients added to shopping cart", Toast.LENGTH_SHORT).show();
+                ShoppingRecipe shoppingRecipe = new ShoppingRecipe(mealName, imgUrl, mealID);
+                shoppingRecipe.save();
 
                 for (int i = 0; i<ingredients.size(); i++){
                     IngredientsAndValueModel model = ingredients.get(i);
                     double ingredientValue = model.getAmount().getMetric().getValue();
                     String ingredientUnit = model.getAmount().getMetric().getUnit();
                     String ingredientName = model.getName();
-                    ShoppingListModel cart = new ShoppingListModel(id, ingredientValue,ingredientUnit, ingredientName);
+                    ShoppingListModel cart = new ShoppingListModel(ingredientValue,ingredientUnit, ingredientName, shoppingRecipe);
                     cart.save();
                 }
             }
@@ -305,7 +330,7 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         summary = (HtmlTextView) findViewById(R.id.recipe_summary);
         servings = (TextView) findViewById(R.id.servings);
         time = (TextView) findViewById(R.id.prep_time);
-        cooked = (TextView) findViewById(R.id.coocked_meal_button);
+        cooked = (TextView) findViewById(R.id.cooked_meal_button);
         uncoocked = (TextView) findViewById(R.id.undo_cooked_meal);
         calories = (TextView) findViewById(R.id.calories);
         carbs = (TextView) findViewById(R.id.carbs);
@@ -318,9 +343,39 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         shopping_progress = (ProgressBar) findViewById(R.id.shopping_progress);
         linearLayout = (LinearLayout) findViewById(R.id.details_layout);
         ratingBar = (RatingBar) findViewById(R.id.ratingbar);
+
+        cooked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                isCooked = true;
+                CookedModel model = new CookedModel(mealID, imgUrl, mealName);
+                model.save();
+                cooked.setVisibility(View.INVISIBLE);
+                uncoocked.setVisibility(View.VISIBLE);
+            }
+        });
+        uncoocked.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
+                isCooked = false;
+                if(cookedMeals != null){
+                    for (int i=0; i<cookedMeals.size(); i++){
+                        CookedModel deleteModel = cookedMeals.get(i);
+                        int identNum = deleteModel.getIdentificationNum();
+                        if (identNum == mealID){
+                            deleteModel.delete();
+                        }
+                    }
+                }
+
+                cooked.setVisibility(View.VISIBLE);
+                uncoocked.setVisibility(View.INVISIBLE);
+            }
+        });
 //        ingredientsFragment = adapter.getre();
     }
-
 
     @Override
     public void passIngredients(ArrayList<IngredientsAndValueModel> passedIngredients) {

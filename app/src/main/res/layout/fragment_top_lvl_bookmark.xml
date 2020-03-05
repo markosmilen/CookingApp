@@ -6,13 +6,13 @@
     android:fitsSystemWindows="true"
     tools:context=".fragments.TopLvlBookmarkFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-   <RelativeLayout
+    <!-- Layout in case of no items -->
+    <RelativeLayout
         android:id="@+id/bookmark_layout_no_items"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/primary_background"
-        android:visibility="visible">
+        android:visibility="invisible">
 
          <ImageButton
              android:id="@+id/add_button"
@@ -51,29 +51,109 @@
             />
 
     </RelativeLayout>
+    <!-- Layout in case of  items present-->
+    <LinearLayout
+        android:id="@+id/bookmark_layout_with_items"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/primary_background"
+        android:visibility="visible">
 
-    <RelativeLayout
-           android:id="@+id/bookmark_layout_with_items"
-           android:layout_width="match_parent"
-           android:layout_height="match_parent"
-        android:visibility="invisible">
-
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbarBookmark"
+        <!-- Layout for bookmarks -->
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-           android:fitsSystemWindows="true"
-            android:gravity="center"
-            android:background="@color/colorWhite"
-            android:theme="@style/AppTheme"/>
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarBookmark"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
+                android:gravity="center"
+                android:background="@color/colorWhite"
+                android:theme="@style/AppTheme"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_bookmarked"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbarBookmark"/>
+
+            <RelativeLayout
+                android:id="@+id/no_items_bookmarks_sublayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:accessibilityTraversalBefore="@id/toolbarBookmark">
+
+                <TextView
+                    android:id="@+id/no_items_text_bookmarks"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="No items in this section"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/no_items_text_bookmarks"
+                    android:src="@drawable/ic_empty"
+                    android:layout_centerHorizontal="true"/>
 
 
-           <androidx.recyclerview.widget.RecyclerView
-               android:id="@+id/recycler_view_bookmarked"
-               android:layout_width="match_parent"
-               android:layout_height="match_parent"
-               android:layout_below="@id/toolbarBookmark"/>
+            </RelativeLayout>
 
-       </RelativeLayout>
+        </LinearLayout>
+
+        <!-- Layout for cooked meals -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_weight="1">
+
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbarCookBook"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                android:fitsSystemWindows="true"
+                android:gravity="center"
+                android:background="@color/colorWhite"
+                android:theme="@style/AppTheme"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recycler_view_cookbook"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@id/toolbarCookBook"/>
+
+            <RelativeLayout
+                android:id="@+id/no_items_cookBook_sublayout"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:accessibilityTraversalBefore="@id/toolbarBookmark">
+
+                <TextView
+                    android:id="@+id/no_items_text_cookbook"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:text="No items in this section"/>
+
+                <ImageView
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_below="@id/no_items_text_cookbook"
+                    android:src="@drawable/ic_empty"
+                    android:layout_centerHorizontal="true"/>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
 
    </androidx.coordinatorlayout.widget.CoordinatorLayout>

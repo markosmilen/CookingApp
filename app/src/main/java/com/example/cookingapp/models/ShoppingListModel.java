@@ -4,18 +4,19 @@ import com.orm.SugarRecord;
 
 public class ShoppingListModel extends SugarRecord<ShoppingListModel> {
 
-    int recipeId;
     double amount;
     String value;
     String ingredientTitle;
 
+    ShoppingRecipe recipe;
+
     public ShoppingListModel(){}
 
-    public ShoppingListModel (int id, double amount, String value, String title){
-        this.recipeId = id;
+    public ShoppingListModel (double amount, String value, String title, ShoppingRecipe recipe){
         this.amount = amount;
         this.value = value;
         this.ingredientTitle = title;
+        this.recipe = recipe;
     }
 
     public double getAmount() {

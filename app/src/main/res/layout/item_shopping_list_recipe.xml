@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="200dp">
+
+        <ImageView
+            android:id="@+id/shopping_list_img"
+            android:layout_width="match_parent"
+            android:layout_height="220dp"
+            android:scaleType="centerCrop"
+            android:background="@drawable/shopping_background"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/black"
+            android:alpha="0.2"/>
+
+        <TextView
+            android:id="@+id/shoppingRecipe_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="EGGS BENEDICT"
+            android:textColor="@color/colorWhite"
+            android:padding="20dp"
+            android:textSize="16dp"
+            android:layout_alignBottom="@+id/shopping_list_img"
+            />
+
+        <Button
+            android:id="@+id/shoppingRecipe_delete"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/ic_delete_x"
+            android:layout_alignEnd="@id/shopping_list_img"/>
+
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

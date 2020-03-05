@@ -42,7 +42,7 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
             case R.id.saved_nav:
                 showTopLevelFragment(new TopLvlBookmarkFragment());
                 break;
-            case R.id.cookbook_nav:
+            case R.id.shopping_nav:
                 showTopLevelFragment(new TopLvlShoppingListFragment());
                 break;
         }

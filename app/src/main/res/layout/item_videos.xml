@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_margin="10dp"
+    app:cardCornerRadius="10dp"
+    android:elevation="10dp">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="170dp">
+
+        <ImageView
+            android:id="@+id/image_video"
+            android:layout_width="match_parent"
+            android:layout_height="170dp"
+            android:src="@drawable/browose_header"
+            android:scaleType="centerCrop"
+            android:adjustViewBounds="true"/>
+
+        <ImageView
+            android:layout_width="60dp"
+            android:layout_height="60dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/ic_play"
+            android:backgroundTint="@color/colorWhite"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="130dp"
+            android:layout_alignBottom="@+id/image_video"
+            android:layout_marginBottom="-6dp"
+            android:background="@drawable/shape_gradient_black_down" />
+
+        <TextView
+            android:id="@+id/video_meal_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingTop="10dp"
+            android:paddingLeft="20dp"
+            android:layout_alignBottom="@+id/image_video"
+            android:text="Meal Title"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:textColor="@android:color/white"
+            android:paddingBottom="10dp"
+            android:singleLine="true"
+            android:ellipsize="end"/>
+    </RelativeLayout>
+
+</androidx.cardview.widget.CardView>

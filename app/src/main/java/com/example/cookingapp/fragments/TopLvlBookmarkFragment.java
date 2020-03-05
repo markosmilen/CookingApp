@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
 
+import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -14,14 +15,16 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
-import android.widget.Toolbar;
 
 import com.example.cookingapp.R;
 import com.example.cookingapp.activities.DetailsActivity;
 import com.example.cookingapp.adapters.BookmarksAdapter;
+import com.example.cookingapp.adapters.CookedMealsAdapter;
 import com.example.cookingapp.interfaces.DeleteBookmarkListener;
 import com.example.cookingapp.models.BookmarkedModel;
+import com.example.cookingapp.models.CookedModel;
 
 import java.util.List;
 
@@ -29,10 +32,13 @@ import java.util.List;
 public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkListener {
 
     List<BookmarkedModel> bookmarkedMeals;
-    RelativeLayout noBookmarks, withBookmarks;
-    androidx.appcompat.widget.Toolbar toolbar;
-    RecyclerView recyclerViewBookmarks;
+    List<CookedModel> cookBookmMeals;
+    RelativeLayout noBookmarks;
+    LinearLayout withBookmarks;
+    androidx.appcompat.widget.Toolbar toolbar, cookbook;
+    RecyclerView recyclerViewBookmarks, recyclerViewCookedMeals;
     BookmarksAdapter bookmarksAdapter;
+    CookedMealsAdapter cookedMealsAdapter;
 
     public TopLvlBookmarkFragment() {
         // Required empty public constructor
@@ -57,14 +63,19 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_top_lvl_bookmark, container, false);
         noBookmarks = (RelativeLayout) view.findViewById(R.id.bookmark_layout_no_items);
-        withBookmarks = (RelativeLayout) view.findViewById(R.id.bookmark_layout_with_items);
+        withBookmarks = (LinearLayout) view.findViewById(R.id.bookmark_layout_with_items);
         bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
+        cookBookmMeals = CookedModel.listAll(CookedModel.class);
 
         recyclerViewBookmarks = (RecyclerView) view.findViewById(R.id.recycler_view_bookmarked);
-        recyclerViewBookmarks.setLayoutManager(new GridLayoutManager(getContext(), 2));
+        recyclerViewBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
         bookmarksAdapter = new BookmarksAdapter(getContext(),bookmarkedMeals, this);
         recyclerViewBookmarks.setAdapter(bookmarksAdapter);
 
+        recyclerViewCookedMeals = (RecyclerView) view.findViewById(R.id.recycler_view_cookbook);
+        recyclerViewCookedMeals.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+        cookedMealsAdapter = new CookedMealsAdapter(getContext(), cookBookmMeals,this);
+        recyclerViewCookedMeals.setAdapter(cookedMealsAdapter);
 
         setLayoutsVisibility();
 
@@ -72,11 +83,12 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         toolbar.setTitle("My Saved Meals");
         toolbar.setTitleTextColor(getResources().getColor(R.color.color_primary));
 
+        cookbook = (Toolbar) view.findViewById(R.id.toolbarCookBook);
+        cookbook.setTitle("My Cooked Meals");
+        cookbook.setTitleTextColor(getResources().getColor(R.color.color_primary));
 
         return  view;
     }
-
-
 
     @Override
     public void onBookmarkDeleted(int id, int position) {
@@ -100,11 +112,33 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         startActivity(detailsIntent);
     }
 
+    @Override
+    public void onCookedMealDeleted(int id, int position) {
+        CookedModel model = (CookedModel.find(CookedModel.class, "IDENTIFICATION_NUM = ?", String.valueOf(id)))
+                .get(0);
+        if (model != null){
+            model.delete();
+        }
+        cookBookmMeals.remove(position);
+        recyclerViewCookedMeals.getRecycledViewPool().clear();
+        cookedMealsAdapter.notifyDataSetChanged();
+        setLayoutsVisibility();
+    }
+
     private void setLayoutsVisibility() {
-        if (bookmarkedMeals.isEmpty()){
+
+        if (bookmarkedMeals.isEmpty() && cookBookmMeals.isEmpty()){
             noBookmarks.setVisibility(View.VISIBLE);
             withBookmarks.setVisibility(View.INVISIBLE);
-        } else { noBookmarks.setVisibility(View.INVISIBLE);
+        } else if (bookmarkedMeals != null || cookBookmMeals != null){ noBookmarks.setVisibility(View.INVISIBLE);
             withBookmarks.setVisibility(View.VISIBLE);}
+
+        if (bookmarkedMeals.isEmpty()){
+            recyclerViewBookmarks.setVisibility(View.GONE);
+        }
+        if (cookBookmMeals.isEmpty()){
+            recyclerViewCookedMeals.setVisibility(View.GONE);
+        }
+
     }
 }

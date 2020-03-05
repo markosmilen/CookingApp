@@ -76,7 +76,7 @@ public class TopLvlFeaturedFragment extends Fragment {
         tabLayout = (TabLayout) view.findViewById(R.id.tabs);
         tabLayout.addTab(tabLayout.newTab().setText("Featured"));
         tabLayout.addTab(tabLayout.newTab().setText("Popular"));
-        tabLayout.addTab(tabLayout.newTab().setText("Desserts"));
+        tabLayout.addTab(tabLayout.newTab().setText("Videos"));
 
         final MealListPagerAdapter pagerAdapter = new MealListPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         pager = (ViewPager) view.findViewById(R.id.viewPager);
@@ -124,51 +124,5 @@ public class TopLvlFeaturedFragment extends Fragment {
 
         return view;
     }
-
-
-
-
- /*   public void generateRandomMeals(String diet){
-        HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/search").newBuilder();
-        builder.addQueryParameter("diet", diet);
-        builder.addQueryParameter("number", "20");
-        builder.addQueryParameter("apiKey", "538bac8dcbdc467c9c1683802b57809b");
-        String url = builder.build().toString();
-
-        OkHttpClient client = new OkHttpClient();
-
-        final Request request = new Request.Builder().url(url).build();
-
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NotNull Call call, @NotNull IOException e) {
-                Log.d("ERROR", e + "");
-            }
-
-            @Override
-            public void onResponse(@NotNull Call call, @NotNull Response response) throws IOException {
-                if (response.isSuccessful()){
-                    String jsonString = response.body().string();
-                    DietModel model = gson.fromJson(jsonString, DietModel.class);
-                    meals = model.getResults();
-                    Log.d("MEALS", meals.size() + "");
-                    if (getActivity() != null){
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                mealsAdapter = new MealsAdapter(getContext(), meals);
-                                recyclerView.setAdapter(mealsAdapter);
-                                mealsAdapter.notifyDataSetChanged();
-                            }
-                        });
-                    }
-
-                }
-
-            }
-        });
-    }
-
-  */
 
 }

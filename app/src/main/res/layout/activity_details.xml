@@ -11,7 +11,7 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_above="@id/coocked_meal_button"
+        android:layout_above="@id/cooked_meal_button"
         >
 
         <RelativeLayout
@@ -381,7 +381,7 @@
 
     <!-- set meal as cooked -->
     <TextView
-        android:id="@+id/coocked_meal_button"
+        android:id="@+id/cooked_meal_button"
         android:layout_width="match_parent"
         android:layout_height="65dp"
         android:padding="20dp"
@@ -392,8 +392,7 @@
         android:textStyle="bold"
         android:textSize="17sp"
         android:visibility="visible"
-        android:layout_alignParentBottom="true"
-        android:onClick="onCoockedMealClicked"/>
+        android:layout_alignParentBottom="true" />
 
     <!-- undo set meal as cooked -->
     <TextView
@@ -413,7 +412,7 @@
         android:textSize="14sp"
         android:visibility="invisible"
         android:layout_alignParentBottom="true"
-        android:onClick="onCoockedMealClicked"/>
+        />
 
 </RelativeLayout>
 
