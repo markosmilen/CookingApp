@@ -12,6 +12,7 @@
     <color name="color_text_ingridients_light_black">#494949</color>
     <color name="color_primaryDark">#9E836E</color>
     <color name="primary_background">#F3EBE3</color>
+    <color name="color_black">@android:color/black</color>
 
 
 </resources>

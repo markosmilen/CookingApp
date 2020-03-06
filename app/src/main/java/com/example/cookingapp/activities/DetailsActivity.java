@@ -292,7 +292,7 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                     double ingredientValue = model.getAmount().getMetric().getValue();
                     String ingredientUnit = model.getAmount().getMetric().getUnit();
                     String ingredientName = model.getName();
-                    ShoppingListModel cart = new ShoppingListModel(ingredientValue,ingredientUnit, ingredientName, shoppingRecipe);
+                    ShoppingListModel cart = new ShoppingListModel(ingredientValue,ingredientUnit, ingredientName, shoppingRecipe, false);
                     cart.save();
                 }
             }

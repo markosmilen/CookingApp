@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookingapp.R;
@@ -20,6 +21,7 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.Shoppi
     List<ShoppingListModel> cartList;
     LayoutInflater inflater;
     Context context;
+    Boolean bought;
 
     public ShoppingAdapter (Context context, List<ShoppingListModel> cartList){
         this.cartList = cartList;
@@ -42,6 +44,16 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.Shoppi
         String name = model.getTitle();
         holder.amount.setText(amount + " " +value);
         holder.ingredient.setText(name);
+        bought = model.isBought();
+        if (bought == true){
+           holder.amount.setTextColor(context.getResources().getColor(R.color.colorGray));
+           holder.checked.setVisibility(View.VISIBLE);
+           holder.unchecked.setVisibility(View.INVISIBLE);
+        } else {
+            holder.amount.setTextColor(context.getResources().getColor(R.color.color_black));
+            holder.checked.setVisibility(View.INVISIBLE);
+            holder.unchecked.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
@@ -52,13 +64,35 @@ public class ShoppingAdapter extends RecyclerView.Adapter<ShoppingAdapter.Shoppi
     public class ShoppingListViewHilder extends RecyclerView.ViewHolder {
 
         TextView amount, ingredient;
-        ImageView checked;
+        ImageView checked, unchecked;
 
-        public ShoppingListViewHilder(@NonNull View itemView) {
+        public ShoppingListViewHilder(@NonNull final View itemView) {
             super(itemView);
             amount = itemView.findViewById(R.id.shpping_ingredient_amount);
             ingredient = itemView.findViewById(R.id.shopping_ingredient_name);
             checked = itemView.findViewById(R.id.ingredient_checked);
+            unchecked = itemView.findViewById(R.id.ingredient_unchecked);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    bought = cartList.get(getAdapterPosition()).isBought();
+                    if (bought==false){
+                        ShoppingListModel model = cartList.get(getAdapterPosition());
+                        model.setBought(true);
+                        model.save();
+                        amount.setTextColor(itemView.getResources().getColor(R.color.colorGray));
+                        checked.setVisibility(View.VISIBLE);
+                        unchecked.setVisibility(View.INVISIBLE);
+                    } else {
+                        ShoppingListModel model = cartList.get(getAdapterPosition());
+                        model.setBought(false);
+                        model.save();
+                        amount.setTextColor(itemView.getResources().getColor(R.color.color_black));
+                        checked.setVisibility(View.INVISIBLE);
+                        unchecked.setVisibility(View.VISIBLE);
+                    }
+                }
+            });
         }
     }
 }
