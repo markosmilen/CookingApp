@@ -144,7 +144,8 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                             servings.setText(recepiInfo.getServings()+" " + "ss");
                             time.setText(recepiInfo.getReadyInMinutes() + " " + "min");
                             imgUrl = recepiInfo.getImage();
-                            name.setText(recepiInfo.getTitle());
+                            mealName = recepiInfo.getTitle();
+                            name.setText(mealName);
                             int starsInt = (int)recepiInfo.getSpoonacularScore()/20;
                             ratingBar.setRating(starsInt);
                             ratingText.setText("(app score -" + " " + (int)recepiInfo.getSpoonacularScore() + ")");
@@ -187,31 +188,7 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
             Toast.makeText(this, "NOW IT IS NOT", Toast.LENGTH_SHORT).show();
         }
     }
-/*
-    public void onCookedMealClicked(View view) {
-        if(!isCooked){
-            isCooked = true;
-            CookedModel model = new CookedModel(mealID, imgUrl, mealName);
-            model.save();
-            cooked.setVisibility(View.INVISIBLE);
-            uncoocked.setVisibility(View.VISIBLE);
-        } else {
-            isCooked = false;
-            if(cookedMeals != null){
-                for (int i=0; i<cookedMeals.size(); i++){
-                    CookedModel deleteModel = cookedMeals.get(i);
-                    int identNum = deleteModel.getIdentificationNum();
-                    if (identNum == mealID){
-                        deleteModel.delete();
-                    }
-                }
-            }
 
-            cooked.setVisibility(View.VISIBLE);
-            uncoocked.setVisibility(View.INVISIBLE);
-        }
-    }
-*/
     public boolean isMealBookmarked(int id){
 
         bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
@@ -235,10 +212,10 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         boolean checkCooked = false;
 
         if (cookedMeals != null){
-            for (int i=1; i<cookedMeals.size(); i++){
+            for (int i=0; i<cookedMeals.size(); i++){
                 CookedModel cookMeal = cookedMeals.get(i);
-                int identNum = cookMeal.getIdentificationNum();
-                if(identNum == id){
+
+                if(cookMeal.getIdentificationNum() == id){
                     checkCooked = true;
                     cooked.setVisibility(View.INVISIBLE);
                     uncoocked.setVisibility(View.VISIBLE);
@@ -357,8 +334,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         uncoocked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 isCooked = false;
                 if(cookedMeals != null){
                     for (int i=0; i<cookedMeals.size(); i++){
@@ -374,7 +349,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                 uncoocked.setVisibility(View.INVISIBLE);
             }
         });
-//        ingredientsFragment = adapter.getre();
     }
 
     @Override

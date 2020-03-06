@@ -11,45 +11,58 @@
     android:layout_margin="10dp"
     >
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        >
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/bookmark_meal_name"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="120dp"
-            android:padding="10dp"
-            android:textSize="16sp"
-            android:textColor="@color/colorPrimaryDark"
-            tools:text="Chicken Breast"
-            android:background="@drawable/shape_gradient_white"
-            android:elevation="5dp"/>
+            android:layout_height="match_parent"
+            android:layout_weight="1">
 
-        <ImageView
-            android:id="@+id/bookmark_meal_imake"
+            <TextView
+                android:id="@+id/bookmark_meal_name"
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                android:padding="10dp"
+                android:textSize="14sp"
+                android:maxLines="2"
+                android:ellipsize="end"
+                android:textColor="@color/colorGray"
+                tools:text="Chicken Breast"
+                android:background="@drawable/shape_gradient_white"
+                android:elevation="5dp"/>
+
+            <ImageView
+                android:id="@+id/bookmark_meal_imake"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_marginTop="20dp"
+                android:layout_gravity="center"
+                android:scaleType="centerCrop"
+                tools:background="@drawable/background_primary"/>
+
+        </RelativeLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_marginTop="20dp"
-            android:layout_gravity="center"
-            android:scaleType="centerInside"
-            tools:background="@drawable/background_primary"/>
+            android:layout_height="match_parent"
+            android:layout_weight="4">
 
-        <Button
-            android:id="@+id/delete_bookmark"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_margin="5dp"
-            android:background="@drawable/ic_delete"
-            android:layout_below="@id/bookmark_meal_imake"
-            android:backgroundTint="@color/color_primary"
-            android:onClick="onBookmarkDeleted"
-            />
+            <Button
+                android:id="@+id/delete_bookmark"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_margin="5dp"
+                android:background="@drawable/ic_delete"
+                android:layout_below="@id/bookmark_meal_imake"
+                android:backgroundTint="@color/color_primary"
+                android:onClick="onBookmarkDeleted"
+                />
 
+        </LinearLayout>
 
-    </RelativeLayout>
-
-
+    </LinearLayout>
 
 </androidx.cardview.widget.CardView>

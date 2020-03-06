@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
+import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.interfaces.RerfreshListener;
 import com.example.cookingapp.models.ShoppingListModel;
 import com.example.cookingapp.models.ShoppingRecipe;
@@ -25,12 +26,13 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
     LayoutInflater inflater;
     List<ShoppingRecipe> recipes;
     int id;
-    RerfreshListener listener;
+    MealListener listener;
 
-    public ShoppingRecipesAdapter(Context context, List<ShoppingRecipe> recipes) {
+    public ShoppingRecipesAdapter(Context context, List<ShoppingRecipe> recipes, MealListener listener) {
         this.context = context;
         this.recipes = recipes;
         this.inflater = LayoutInflater.from(context);
+        this.listener = listener;
     }
 
     @NonNull
@@ -43,7 +45,8 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
     @Override
     public void onBindViewHolder(@NonNull ShoppingRecipesViewHolder holder, int position) {
         ShoppingRecipe recipe = recipes.get(position);
-        recipe.setRecipeName(recipe.getRecipeName());
+        holder.mealTitle.setText(recipe.getRecipeName());
+   //     recipe.setRecipeName(recipe.getRecipeName());
         String url = recipe.getRecipeImg();
         Glide.with(context).load(url).into(holder.mealImg);
         id = recipe.getRecepiID();
@@ -64,6 +67,12 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
             super(itemView);
 
             mealImg = (ImageView) itemView.findViewById(R.id.shopping_list_img);
+            mealImg.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    listener.getMealInfo(recipes.get(getAdapterPosition()).getRecepiID());
+                }
+            });
             mealTitle = (TextView) itemView.findViewById(R.id.shoppingRecipe_title);
             delete = (Button) itemView.findViewById(R.id.shoppingRecipe_delete);
             delete.setOnClickListener(new View.OnClickListener() {

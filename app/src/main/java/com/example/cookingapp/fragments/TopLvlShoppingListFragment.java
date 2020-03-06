@@ -31,7 +31,6 @@ public class TopLvlShoppingListFragment extends Fragment {
     List<ShoppingRecipe> shoppingRecipes;
     RecyclerView recyclerView;
     ShoppingAdapter adapter;
-    Button delete;
     TextView listSize;
 
     public TopLvlShoppingListFragment() {
@@ -57,18 +56,9 @@ public class TopLvlShoppingListFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_top_lvl_shopping_list, container, false);
 
-        delete = (Button) view.findViewById(R.id.delete_button);
         listSize = (TextView) view.findViewById(R.id.list_size);
-        delete.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ShoppingListModel.deleteAll(ShoppingListModel.class);
-            }
-        });
         cartList = ShoppingListModel.listAll(ShoppingListModel.class);
-        shoppingRecipes = ShoppingRecipe.listAll(ShoppingRecipe.class);
-        int numberOfRecipes = shoppingRecipes.size();
-        listSize.setText(numberOfRecipes + " " + "Recipes");
+        updateView();
         listSize.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -82,5 +72,20 @@ public class TopLvlShoppingListFragment extends Fragment {
         adapter = new ShoppingAdapter(getActivity(), cartList);
         recyclerView.setAdapter(adapter);
         return view;
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        cartList.clear();
+        cartList.addAll(ShoppingListModel.listAll(ShoppingListModel.class));
+        updateView();
+        adapter.notifyDataSetChanged();
+    }
+
+    public void updateView(){
+        shoppingRecipes = ShoppingRecipe.listAll(ShoppingRecipe.class);
+        int numberOfRecipes = shoppingRecipes.size();
+        listSize.setText(numberOfRecipes + " " + "Recipes");
     }
 }

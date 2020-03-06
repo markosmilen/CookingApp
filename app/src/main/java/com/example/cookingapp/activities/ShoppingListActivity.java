@@ -5,15 +5,17 @@ import androidx.appcompat.widget.Toolbar;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.content.Intent;
 import android.os.Bundle;
 
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.ShoppingRecipesAdapter;
+import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.models.ShoppingRecipe;
 
 import java.util.List;
 
-public class ShoppingListActivity extends AppCompatActivity {
+public class ShoppingListActivity extends AppCompatActivity implements MealListener {
 
     Toolbar toolbar;
     RecyclerView recyclerView;
@@ -32,7 +34,14 @@ public class ShoppingListActivity extends AppCompatActivity {
 
         recyclerView = (RecyclerView) findViewById(R.id.shoppingListRecipes_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-        adapter = new ShoppingRecipesAdapter(this, recipes);
+        adapter = new ShoppingRecipesAdapter(this, recipes, this);
         recyclerView.setAdapter(adapter);
+    }
+
+    @Override
+    public void getMealInfo(int id) {
+        Intent detailsIntent = new Intent(this, DetailsActivity.class);
+        detailsIntent.putExtra("ID", id);
+        startActivity(detailsIntent);
     }
 }
