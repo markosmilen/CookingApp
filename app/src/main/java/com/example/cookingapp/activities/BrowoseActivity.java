@@ -5,13 +5,12 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.MenuItem;
 
 import com.example.cookingapp.R;
 import com.example.cookingapp.fragments.TopLvlBookmarkFragment;
 import com.example.cookingapp.fragments.TopLvlFeaturedFragment;
-import com.example.cookingapp.fragments.TopLvlSearchFragment;
+import com.example.cookingapp.fragments.TopLvlSearchFragmentImpv;
 import com.example.cookingapp.fragments.TopLvlShoppingListFragment;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 
@@ -37,7 +36,7 @@ public class BrowoseActivity extends AppCompatActivity implements BottomNavigati
                 showTopLevelFragment(new TopLvlFeaturedFragment());
                 break;
             case R.id.search_nav:
-                showTopLevelFragment(new TopLvlSearchFragment());
+                showTopLevelFragment(new TopLvlSearchFragmentImpv());
                 break;
             case R.id.saved_nav:
                 showTopLevelFragment(new TopLvlBookmarkFragment());

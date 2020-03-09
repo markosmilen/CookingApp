@@ -4,6 +4,7 @@ import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentPagerAdapter;
 
+import com.example.cookingapp.activities.MainActivity;
 import com.example.cookingapp.fragments.BottomLvlDietsFragment;
 import com.example.cookingapp.fragments.BottomLvlListsFragment;
 import com.example.cookingapp.fragments.BottomLvlPopularMealsFragment;

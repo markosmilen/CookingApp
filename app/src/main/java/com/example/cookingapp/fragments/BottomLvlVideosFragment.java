@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.cookingapp.R;
+import com.example.cookingapp.activities.BrowoseActivity;
 import com.example.cookingapp.adapters.VIdeoMealsAdapter;
 import com.example.cookingapp.interfaces.VideoListener;
 import com.example.cookingapp.models.VideoModel;

@@ -58,6 +58,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
 
     public BottomLvlDietsFragment(){
     }
+
     public static BottomLvlDietsFragment newInstance(){
         BottomLvlDietsFragment mainFragment = new BottomLvlDietsFragment();
         Bundle bundle = new Bundle();
@@ -88,7 +89,6 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
         }
 
         initScrollListener();
-
         gson = new Gson();
         return view;
     }

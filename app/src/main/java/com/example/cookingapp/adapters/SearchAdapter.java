@@ -1,6 +1,7 @@
 package com.example.cookingapp.adapters;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
+import com.example.cookingapp.activities.DetailsActivity;
 import com.example.cookingapp.models.DietMealsModel;
 
 import org.w3c.dom.Text;
@@ -41,7 +43,7 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
     public void onBindViewHolder(@NonNull SearchViewHolder holder, int position) {
         DietMealsModel model = searchedMeals.get(position);
         String baseurl = "https://spoonacular.com/recipeImages/";
-        String img = baseurl + model.getImage();
+        String img = model.getImage();
         Glide.with(context).load(img).centerCrop().into(holder.searchMealImg);
         holder.searchMealTitle.setText(model.getTitle());
     }
@@ -61,6 +63,14 @@ public class SearchAdapter extends RecyclerView.Adapter<SearchAdapter.SearchView
 
             searchMealTitle = (TextView) itemView.findViewById(R.id.search_meal_name);
             searchMealImg = (ImageView) itemView.findViewById(R.id.search_meal_image);
+            itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent detailsIntent = new Intent(context, DetailsActivity.class);
+                    detailsIntent.putExtra("ID", searchedMeals.get(getAdapterPosition()).getId());
+                    context.startActivity(detailsIntent);
+                }
+            });
         }
     }
 }
