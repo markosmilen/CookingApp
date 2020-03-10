@@ -1,6 +1,7 @@
 package com.example.cookingapp.fragments;
 
 import android.os.Bundle;
+import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -9,12 +10,12 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.cookingapp.R;
@@ -65,13 +66,12 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_top_lvl_search_imp, container, false);
-
         initView(view);
 
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
-
         gson = new Gson();
+        initScrollListener();
 
         searchBar.addTextChangedListener(new TextWatcher() {
             @Override
@@ -88,8 +88,11 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
             public void afterTextChanged(Editable s) {
                 queryString = s.toString();
                 if (s.toString().length() > 3) {
+                    mealsList.clear();
                     searchFields.setVisibility(View.INVISIBLE);
                     progressBar.setVisibility(View.VISIBLE);
+                    searchAdapter = new SearchAdapter(mealsList, getContext());
+                    recyclerView.setAdapter(searchAdapter);
                     loadSearchedMeals(queryString, 0);
                 } else {
                     mealsList = new ArrayList<>();
@@ -99,13 +102,11 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
                 }
             }
         });
-
         return view;
     }
 
     public void loadSearchedMeals(String query, int offset){
-
-        mealsList.clear();
+        isLoading = true;
         if(dietList != null){
             dietList.clear();
         }
@@ -118,7 +119,7 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
         if(timeList != null){
             timeList.clear();
         }
-        isLoading = true;
+
         prepareQueries();
 
         HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/complexSearch?").newBuilder();
@@ -128,19 +129,19 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
             builder.addQueryParameter("offset", offset +"");
         }
         if (!cuisineList.isEmpty()){
-            String searchCuisine = populateList(cuisineList);
+            String searchCuisine = extractList(cuisineList);
             builder.addQueryParameter("cuisine", searchCuisine);
         }
         if (!typeList.isEmpty()){
-            String searchType = populateList(typeList);
+            String searchType = extractList(typeList);
             builder.addQueryParameter("type", searchType);
         }
         if (!timeList.isEmpty()){
-            String searchQuick = populateList(timeList);
+            String searchQuick = extractList(timeList);
             builder.addQueryParameter("maxReadyTime", searchQuick);
         }
         if (!dietList.isEmpty()){
-            String searchDiet = populateList(dietList);
+            String searchDiet = extractList(dietList);
             builder.addQueryParameter("diet", searchDiet);
         }
         builder.addQueryParameter("apiKey", "538bac8dcbdc467c9c1683802b57809b");
@@ -170,11 +171,9 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
-                                searchAdapter = new SearchAdapter(mealsList, getContext());
-                                recyclerView.setAdapter(searchAdapter);
                                 searchAdapter.notifyDataSetChanged();
-                                progressBar.setVisibility(View.INVISIBLE);
                                 results_layout.setVisibility(View.VISIBLE);
+                                progressBar.setVisibility(View.INVISIBLE);
                                 isLoading = false;
                             }
                         });
@@ -357,7 +356,7 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
         }
     }
 
-    public String populateList(ArrayList<String> list){
+    public String extractList(ArrayList<String> list){
         String query = "";
         for (int i=0; i<list.size(); i++){
             if (query.equals("")) {
@@ -367,5 +366,42 @@ public class TopLvlSearchFragmentImpv extends Fragment implements View.OnClickLi
             }
         }
         return query;
+    }
+
+    public void initScrollListener(){
+        recyclerView.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(@NonNull RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(@NonNull final RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+
+                final LinearLayoutManager linearLayoutManager =(LinearLayoutManager) recyclerView.getLayoutManager();
+                    if(!isLoading){
+                        if(linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == mealsList.size()-1){
+                            mealsList.add(null);
+                            searchAdapter.notifyItemInserted(mealsList.size()-1);
+                            recyclerView.scrollToPosition(mealsList.size()-1);
+                            offset = offset + 30;
+
+                            Handler handler = new Handler();
+                            handler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    mealsList.remove(mealsList.size()-1);
+                                    int scrollPosition = mealsList.size();
+                                    searchAdapter.notifyItemRemoved(scrollPosition);
+                                    loadSearchedMeals(queryString, offset);
+                                    isLoading = true;
+                                }
+                            });
+                        }
+                    }
+            }
+        });
     }
 }

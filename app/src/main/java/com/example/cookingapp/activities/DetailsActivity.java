@@ -167,7 +167,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         if(!isBookmarked){
             isBookmarked = true;
             BookmarkedModel bookmark = new BookmarkedModel(mealID, imgUrl, mealName);
-            Log.d("GOT_ID", bookmark.getIdentificationNum() + "");
             bookmark.save();
             bookmarked.setBackgroundResource(R.drawable.ic_bookmarked);
             Toast.makeText(this, "NOW ITS BOOKMARKED", Toast.LENGTH_SHORT).show();

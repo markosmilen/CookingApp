@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activities.ShoppingListActivity"
-    android:background="@android:color/black"
+    android:background="@color/primary_background"
     android:fitsSystemWindows="true"
     android:orientation="vertical">
 
@@ -15,7 +15,7 @@
         android:layout_height="?attr/actionBarSize"
         android:fitsSystemWindows="true"
         android:background="@color/colorWhite"
-        android:theme="@style/AppTheme"/>
+        android:theme="@style/AppTheme" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/shoppingListRecipes_recycler_view"

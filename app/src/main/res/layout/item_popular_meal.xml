@@ -63,6 +63,5 @@
             android:layout_alignParentBottom="true"
             />
 
-
     </RelativeLayout>
 </androidx.cardview.widget.CardView>

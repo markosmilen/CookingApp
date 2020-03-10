@@ -34,7 +34,7 @@
             android:paddingRight="20dp"
             android:paddingBottom="10dp"
             android:paddingTop="10dp"
-            android:drawableEnd="@drawable/ic_right"/>
+            android:drawableEnd="@drawable/ic_right_arrow"/>
 
         <View
             android:id="@+id/devider"
