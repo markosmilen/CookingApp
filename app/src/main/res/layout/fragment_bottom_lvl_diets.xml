@@ -9,11 +9,24 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
+        <TextView
+            android:id="@+id/selected_diet_info_text"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Selected Diet:"
+            android:padding="20dp"
+            android:textColor="#F44336"
+            android:drawableRight="@drawable/ic_remove"
+            android:textStyle="italic"
+            android:drawablePadding="10dp"/>
+
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/recyclerview_selectedDiet"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="5dp"/>
+            android:layout_margin="5dp"
+            android:layout_below="@id/selected_diet_info_text"/>
         
         <ProgressBar
             android:id="@+id/progress_bar_meals"

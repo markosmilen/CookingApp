@@ -3,6 +3,7 @@ package com.example.cookingapp.fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
@@ -26,13 +27,14 @@ import com.example.cookingapp.interfaces.DeleteBookmarkListener;
 import com.example.cookingapp.models.BookmarkedModel;
 import com.example.cookingapp.models.CookedModel;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkListener {
 
-    List<BookmarkedModel> bookmarkedMeals;
-    List<CookedModel> cookBookmMeals;
+    List<BookmarkedModel> bookmarkedMeals = new ArrayList<>();
+    List<CookedModel> cookBookmMeals = new ArrayList<>();
     RelativeLayout noBookmarks;
     LinearLayout withBookmarks;
     androidx.appcompat.widget.Toolbar toolbar, cookbook;
@@ -64,20 +66,15 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         View view = inflater.inflate(R.layout.fragment_top_lvl_bookmark, container, false);
         noBookmarks = (RelativeLayout) view.findViewById(R.id.bookmark_layout_no_items);
         withBookmarks = (LinearLayout) view.findViewById(R.id.bookmark_layout_with_items);
-        bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
-        cookBookmMeals = CookedModel.listAll(CookedModel.class);
+
+        new GetAllBookmarksAsyncTask().execute();
+
+     //   bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
+     //   cookBookmMeals = CookedModel.listAll(CookedModel.class);
 
         recyclerViewBookmarks = (RecyclerView) view.findViewById(R.id.recycler_view_bookmarked);
-        recyclerViewBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        bookmarksAdapter = new BookmarksAdapter(getContext(),bookmarkedMeals, this);
-        recyclerViewBookmarks.setAdapter(bookmarksAdapter);
-
         recyclerViewCookedMeals = (RecyclerView) view.findViewById(R.id.recycler_view_cookbook);
-        recyclerViewCookedMeals.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-        cookedMealsAdapter = new CookedMealsAdapter(getContext(), cookBookmMeals,this);
-        recyclerViewCookedMeals.setAdapter(cookedMealsAdapter);
 
-        setLayoutsVisibility();
 
         toolbar = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarBookmark);
         toolbar.setTitle("My Saved Meals");
@@ -139,6 +136,37 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         if (cookBookmMeals.isEmpty()){
             recyclerViewCookedMeals.setVisibility(View.GONE);
         }
-
     }
+
+    @Override
+    public void onResume() {
+        new GetAllBookmarksAsyncTask().execute();
+        super.onResume();
+    }
+
+    public class GetAllBookmarksAsyncTask extends AsyncTask <Void, Void, Void>{
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
+            cookBookmMeals = CookedModel.listAll(CookedModel.class);
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+
+            recyclerViewBookmarks.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            bookmarksAdapter = new BookmarksAdapter(getContext(),bookmarkedMeals, TopLvlBookmarkFragment.this);
+            recyclerViewBookmarks.setAdapter(bookmarksAdapter);
+
+            recyclerViewCookedMeals.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
+            cookedMealsAdapter = new CookedMealsAdapter(getContext(), cookBookmMeals,TopLvlBookmarkFragment.this);
+            recyclerViewCookedMeals.setAdapter(cookedMealsAdapter);
+
+            setLayoutsVisibility();
+            super.onPostExecute(aVoid);
+        }
+    }
+
 }

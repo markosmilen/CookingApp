@@ -2,12 +2,15 @@ package com.example.cookingapp.fragments;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
 
 import androidx.core.content.ContextCompat;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentPagerAdapter;
+import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.viewpager.widget.ViewPager;
@@ -16,9 +19,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.cookingapp.R;
 import com.example.cookingapp.activities.BrowoseActivity;
+import com.example.cookingapp.activities.ShoppingListActivity;
 import com.example.cookingapp.adapters.MealListPagerAdapter;
 import com.example.cookingapp.adapters.MealsAdapter;
 import com.example.cookingapp.models.DietMealsModel;
@@ -41,9 +50,11 @@ import okhttp3.Response;
 
 
 public class TopLvlFeaturedFragment extends Fragment {
+    public static final String TAG = TopLvlFeaturedFragment.class.getSimpleName();
 
     String diet;
     SharedPreferences sharedPreferences;
+    RelativeLayout dietInfoLayout;
     TabLayout tabLayout;
     ViewPager pager;
     AppBarLayout appBarLayout;
@@ -51,7 +62,6 @@ public class TopLvlFeaturedFragment extends Fragment {
     public TopLvlFeaturedFragment() {
         // Required empty public constructor
     }
-
 
     public static TopLvlFeaturedFragment newInstance(String param1, String param2) {
         TopLvlFeaturedFragment fragment = new TopLvlFeaturedFragment();
@@ -78,15 +88,19 @@ public class TopLvlFeaturedFragment extends Fragment {
         tabLayout.addTab(tabLayout.newTab().setText("Popular"));
         tabLayout.addTab(tabLayout.newTab().setText("Videos"));
 
+
         final MealListPagerAdapter pagerAdapter = new MealListPagerAdapter(getChildFragmentManager(), tabLayout.getTabCount());
         pager = (ViewPager) view.findViewById(R.id.viewPager);
         pager.setAdapter(pagerAdapter);
         pager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         pager.setOffscreenPageLimit(3);
+
+
         tabLayout.addOnTabSelectedListener(new TabLayout.OnTabSelectedListener() {
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
-                pager.setCurrentItem(tab.getPosition());
+                int tabNum = tab.getPosition();
+                pager.setCurrentItem(tabNum);
             }
 
             @Override
@@ -121,8 +135,6 @@ public class TopLvlFeaturedFragment extends Fragment {
                 }
             }
         });
-
         return view;
     }
-
 }

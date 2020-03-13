@@ -354,4 +354,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     public void passIngredients(ArrayList<IngredientsAndValueModel> passedIngredients) {
         ingredients = passedIngredients;
     }
+
+
 }

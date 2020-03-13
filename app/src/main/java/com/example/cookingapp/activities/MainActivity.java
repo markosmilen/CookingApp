@@ -57,7 +57,6 @@ public class MainActivity extends AppCompatActivity implements DietListener {
 
         adapterBot = new DietsAdapter(this, bot, this);
         recyclerViewBot.setAdapter(adapterBot);
-
     }
 
     @Override
@@ -83,6 +82,5 @@ public class MainActivity extends AppCompatActivity implements DietListener {
 
         Intent browoseIntent = new Intent(MainActivity.this, BrowoseActivity.class);
         startActivity(browoseIntent);
-        finish();
     }
 }

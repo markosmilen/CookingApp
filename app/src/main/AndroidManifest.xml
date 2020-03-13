@@ -13,7 +13,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:replace="android:icon">
-        <activity android:name=".activities.ShoppingListActivity"></activity>
+        <activity android:name=".activities.MainActivity"></activity>
+        <activity android:name=".activities.ShoppingListActivity" />
 
         <meta-data
             android:name="DATABASE"
@@ -30,7 +31,7 @@
 
         <activity android:name=".activities.DetailsActivity" />
         <activity android:name=".activities.BrowoseActivity" />
-        <activity android:name=".activities.MainActivity">
+        <activity android:name=".activities.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

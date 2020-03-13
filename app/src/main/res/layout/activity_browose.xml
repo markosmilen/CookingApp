@@ -9,7 +9,6 @@
     android:fitsSystemWindows="true"
     tools:context=".activities.BrowoseActivity">
 
-
     <FrameLayout
         android:id="@+id/top_lvl_frame"
         android:layout_width="match_parent"
@@ -17,7 +16,6 @@
         android:animateLayoutChanges="true"
         android:layout_above="@id/bottomNav"
         android:fitsSystemWindows="true"
-
         />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView

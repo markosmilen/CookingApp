@@ -10,6 +10,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -55,6 +56,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
     ProgressBar progressBar;
     boolean isLoading = false;
     int offset = 0;
+    TextView selectedDiet;
 
     public BottomLvlDietsFragment(){
     }
@@ -74,11 +76,14 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
         progressBar = (ProgressBar) view.findViewById(R.id.progress_bar_meals);
 
         diet = sharedPreferences.getString("DIET", null);
+        selectedDiet = (TextView) view.findViewById(R.id.selected_diet_info_text);
+        selectedDiet.setText("Selected Diet: " + diet);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.recyclerview_selectedDiet);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
 
         if (diet.equals("all")){
+            selectedDiet.setVisibility(View.GONE);
             generateRandomMealsList();
             randomMealsAdapter = new RandomMealsAdapter(randomMeals, getContext(), BottomLvlDietsFragment.this);
             recyclerView.setAdapter(randomMealsAdapter);
@@ -87,6 +92,20 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
             mealsAdapter = new MealsAdapter(getContext(), meals, BottomLvlDietsFragment.this);
             recyclerView.setAdapter(mealsAdapter);
         }
+
+        selectedDiet.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectedDiet.setVisibility(View.GONE);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("DIET", "all");
+                editor.commit();
+                progressBar.setVisibility(View.VISIBLE);
+                generateRandomMealsList();
+                randomMealsAdapter = new RandomMealsAdapter(randomMeals, getContext(), BottomLvlDietsFragment.this);
+                recyclerView.setAdapter(randomMealsAdapter);
+            }
+        });
 
         initScrollListener();
         gson = new Gson();
