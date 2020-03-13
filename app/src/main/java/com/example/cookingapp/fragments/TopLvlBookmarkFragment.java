@@ -8,6 +8,7 @@ import android.os.Bundle;
 
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -16,6 +17,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 
@@ -41,6 +43,7 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
     RecyclerView recyclerViewBookmarks, recyclerViewCookedMeals;
     BookmarksAdapter bookmarksAdapter;
     CookedMealsAdapter cookedMealsAdapter;
+    ImageButton addMeals;
 
     public TopLvlBookmarkFragment() {
         // Required empty public constructor
@@ -66,6 +69,15 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         View view = inflater.inflate(R.layout.fragment_top_lvl_bookmark, container, false);
         noBookmarks = (RelativeLayout) view.findViewById(R.id.bookmark_layout_no_items);
         withBookmarks = (LinearLayout) view.findViewById(R.id.bookmark_layout_with_items);
+        final TopLvlFeaturedFragment fragment = new TopLvlFeaturedFragment();
+        addMeals = (ImageButton) view.findViewById(R.id.add_button);
+        addMeals.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                FragmentManager fm = getFragmentManager();
+                fm.beginTransaction().replace(R.id.top_lvl_frame, fragment, null).addToBackStack(null).commit();
+            }
+        });
 
         new GetAllBookmarksAsyncTask().execute();
 
