@@ -106,7 +106,6 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                 recyclerView.setAdapter(randomMealsAdapter);
             }
         });
-
         initScrollListener();
         gson = new Gson();
         return view;
@@ -135,10 +134,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                 if (response.isSuccessful()){
                     String jsonString = response.body().string();
                     RandomResponceModel model = gson.fromJson(jsonString, RandomResponceModel.class);
-                    ArrayList<RecipeInformationModel> result = model.getRecipes();
-                    for (int i = 0; i < result.size(); i++){
-                        randomMeals.add(result.get(i));
-                    }
+                    randomMeals.addAll(model.getRecipes());
 
                     if (getActivity() != null){
                         getActivity().runOnUiThread(new Runnable() {
@@ -158,7 +154,6 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
     }
 
     public void generateDietMeals(String diet, int offset){
-
         isLoading = true;
         HttpUrl.Builder builder = HttpUrl.parse("https://api.spoonacular.com/recipes/search").newBuilder();
         builder.addQueryParameter("diet", diet);
@@ -184,10 +179,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                 if (response.isSuccessful()){
                     String jsonString = response.body().string();
                     DietModel model = gson.fromJson(jsonString, DietModel.class);
-                    ArrayList<DietMealsModel> result = model.getResults();
-                    for (int i = 0; i < result.size(); i++){
-                        meals.add(result.get(i));
-                    }
+                    meals.addAll(model.getResults());
 
                     Log.d("MEALS", meals.size() + "");
                     if (getActivity() != null){
@@ -218,22 +210,24 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
 
 
                 final LinearLayoutManager linearLayoutManager =(LinearLayoutManager) recyclerView.getLayoutManager();
-
                 if (diet.equals("all")){
                     if(!isLoading){
-                        if(linearLayoutManager != null && linearLayoutManager.findFirstCompletelyVisibleItemPosition() == randomMeals.size()-1){
+                        Log.d("ISLOADING_IS", isLoading+"");
+                        Log.d("DIETIS", diet);
+                        Log.d("POSITION_IS", linearLayoutManager.findLastCompletelyVisibleItemPosition()+ "");
+                        Log.d("DATA_SIZE_IS", randomMeals.size()+"");
+                        if(linearLayoutManager != null && linearLayoutManager.findFirstCompletelyVisibleItemPosition() == randomMeals.size()-2){
                             randomMeals.add(null);
-                            mealsAdapter.notifyItemInserted(randomMeals.size()-1);
+                            randomMealsAdapter.notifyItemInserted(randomMeals.size()-1);
+                            recyclerView.scrollToPosition(randomMeals.size()-1);
                             Handler handler = new Handler();
                             handler.post(new Runnable() {
                                 @Override
                                 public void run() {
                                     randomMeals.remove(randomMeals.size()-1);
                                     int scrollPosition = randomMeals.size();
-                                    mealsAdapter.notifyItemRemoved(scrollPosition);
-                                  //  recyclerView.scrollToPosition(scrollPosition);
+                                    randomMealsAdapter.notifyItemRemoved(scrollPosition);
                                     generateRandomMealsList();
-                                    isLoading = true;
                                 }
                             });
                         }
@@ -254,7 +248,6 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                                     int scrollPosition = meals.size();
                                     mealsAdapter.notifyItemRemoved(scrollPosition);
                                     generateDietMeals(diet, offset);
-                                    isLoading = true;
                                 }
                             });
                         }

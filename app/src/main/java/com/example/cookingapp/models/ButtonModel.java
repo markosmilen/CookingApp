@@ -30,7 +30,6 @@ public class ButtonModel {
             Log.d("POSITION", i +"");
             buttons.add(button);
         }
-
         return buttons;
     }
 }

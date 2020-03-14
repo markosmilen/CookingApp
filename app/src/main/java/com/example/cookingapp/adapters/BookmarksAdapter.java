@@ -28,7 +28,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.Book
     DeleteBookmarkListener listener;
     int id;
 
-
     public BookmarksAdapter(Context context, List<BookmarkedModel> bookmarks, DeleteBookmarkListener listener) {
         this.context = context;
         this.bookmarks = bookmarks;
@@ -82,7 +81,6 @@ public class BookmarksAdapter extends RecyclerView.Adapter<BookmarksAdapter.Book
                     listener.getMealInfo(bookmarks.get(getAdapterPosition()).getIdentificationNum());
                 }
             });
-
         }
     }
 }

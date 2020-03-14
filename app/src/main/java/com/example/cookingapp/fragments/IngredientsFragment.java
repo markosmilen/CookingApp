@@ -38,8 +38,6 @@ public class IngredientsFragment extends Fragment {
     public static final String TAG = IngredientsFragment.class.getSimpleName();
     private static final String ARG_PARAM1 = "ID";
 
-    private
-
     ArrayList<IngredientsAndValueModel> ingrediens = new ArrayList<>();
     RecyclerView recycler;
     IngridientsAdapter adapter;
@@ -48,14 +46,12 @@ public class IngredientsFragment extends Fragment {
     ViewPager pager;
     Gson gson;
 
-
     public IngredientsFragment() {
         // Required empty public constructor
     }
 
     public static IngredientsFragment newInstance(String id) {
         IngredientsFragment fragment = new IngredientsFragment();
-
         Bundle args = new Bundle();
         args.putString(ARG_PARAM1, id);
         fragment.setArguments(args);
@@ -69,8 +65,6 @@ public class IngredientsFragment extends Fragment {
             id = getArguments().getString(ARG_PARAM1);
         }
     }
-
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

@@ -49,7 +49,6 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
         // Required empty public constructor
     }
 
-
     public static TopLvlBookmarkFragment newInstance(String param1, String param2) {
         TopLvlBookmarkFragment fragment = new TopLvlBookmarkFragment();
         Bundle args = new Bundle();
@@ -81,12 +80,8 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
 
         new GetAllBookmarksAsyncTask().execute();
 
-     //   bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
-     //   cookBookmMeals = CookedModel.listAll(CookedModel.class);
-
         recyclerViewBookmarks = (RecyclerView) view.findViewById(R.id.recycler_view_bookmarked);
         recyclerViewCookedMeals = (RecyclerView) view.findViewById(R.id.recycler_view_cookbook);
-
 
         toolbar = (androidx.appcompat.widget.Toolbar) view.findViewById(R.id.toolbarBookmark);
         toolbar.setTitle("My Saved Meals");
@@ -180,5 +175,4 @@ public class TopLvlBookmarkFragment extends Fragment implements DeleteBookmarkLi
             super.onPostExecute(aVoid);
         }
     }
-
 }

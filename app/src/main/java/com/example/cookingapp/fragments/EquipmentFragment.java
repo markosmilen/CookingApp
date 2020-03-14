@@ -42,7 +42,6 @@ public class EquipmentFragment extends Fragment {
     Gson gson;
     private String id;
 
-
     public EquipmentFragment() {
         // Required empty public constructor
     }
@@ -113,8 +112,5 @@ public class EquipmentFragment extends Fragment {
                 }
             }
         });
-
-
     }
-
 }

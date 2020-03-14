@@ -46,7 +46,6 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
     public void onBindViewHolder(@NonNull ShoppingRecipesViewHolder holder, int position) {
         ShoppingRecipe recipe = recipes.get(position);
         holder.mealTitle.setText(recipe.getRecipeName());
-   //     recipe.setRecipeName(recipe.getRecipeName());
         String url = recipe.getRecipeImg();
         Glide.with(context).load(url).into(holder.mealImg);
         id = recipe.getRecepiID();
@@ -82,7 +81,6 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
                     ShoppingListModel.deleteAll(ShoppingListModel.class, "recipe = ?", recipes.get(getAdapterPosition()).getId() + "");
                     ShoppingRecipe deleteModel = recipes.get(getAdapterPosition());
                     deleteModel.delete();
-
                     recipes.remove(getAdapterPosition());
                     notifyDataSetChanged();
                 }

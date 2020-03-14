@@ -89,7 +89,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         isBookmarked = isMealBookmarked(mealID);
         isCooked = isMealCooked(mealID);
 
-
         final MealDeatilsPagerAdapter pagerAdapter = new MealDeatilsPagerAdapter(getSupportFragmentManager(), tabLayout.getTabCount(), mealID+"");
         viewPager.setAdapter(pagerAdapter);
         viewPager.setCurrentItem(0);
@@ -104,7 +103,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
 
             @Override
             public void onTabUnselected(TabLayout.Tab tab) {
-
             }
 
             @Override
@@ -182,7 +180,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                     }
                 }
             }
-
             bookmarked.setBackgroundResource(R.drawable.ic_not_bookmarked);
             Toast.makeText(this, "NOW IT IS NOT", Toast.LENGTH_SHORT).show();
         }
@@ -266,7 +263,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                             protein.setText(model.getProtein());
                         }
                     });
-
                 }
             }
         });
@@ -343,7 +339,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                         }
                     }
                 }
-
                 cooked.setVisibility(View.VISIBLE);
                 uncoocked.setVisibility(View.INVISIBLE);
             }
@@ -354,6 +349,4 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     public void passIngredients(ArrayList<IngredientsAndValueModel> passedIngredients) {
         ingredients = passedIngredients;
     }
-
-
 }

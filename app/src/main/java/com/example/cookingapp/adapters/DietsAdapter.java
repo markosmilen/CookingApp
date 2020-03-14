@@ -30,7 +30,6 @@ public class DietsAdapter extends RecyclerView.Adapter<DietsAdapter.DietViewHold
         this.indexces = indexces;
         this.listener = listener;
         Log.d("INDEXES", indexces[0] + "" + indexces[1] + "" + indexces[2] + "");
-
         diets = ButtonModel.prepareButtons(context.getResources().getStringArray(R.array.diets));
     }
 

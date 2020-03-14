@@ -14,7 +14,6 @@ public class CookedModel extends SugarRecord<CookedModel> {
 
     public CookedModel(){}
 
-
     public CookedModel(int identificationNum, String img, String name){
         this.identificationNum = identificationNum;
         this.img = img;

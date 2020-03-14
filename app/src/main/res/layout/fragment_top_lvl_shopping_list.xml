@@ -13,9 +13,10 @@
         <ImageView
             android:id="@+id/shopping_cover"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:scaleType="centerCrop"
-            android:background="@drawable/shopping_background"/>
+            android:layout_height="150dp"
+            android:background="@drawable/ingredients5"
+            android:scaleType="fitCenter"
+            />
 
         <View
             android:layout_width="match_parent"

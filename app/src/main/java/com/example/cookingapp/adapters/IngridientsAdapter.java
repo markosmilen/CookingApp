@@ -52,7 +52,6 @@ public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.
         else {
             holder.itemView.setBackgroundColor(Color.parseColor("#ffffff"));
         }
-        //holder.description.setText();
     }
 
     @Override
@@ -62,7 +61,7 @@ public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.
 
     public class IngridientsViewHolder extends RecyclerView.ViewHolder {
 
-        TextView amounth, description, ingridient;
+        TextView amounth, ingridient;
         LinearLayout layout;
 
         public IngridientsViewHolder(@NonNull View itemView) {
@@ -70,7 +69,6 @@ public class IngridientsAdapter extends RecyclerView.Adapter<IngridientsAdapter.
             amounth = (TextView) itemView.findViewById(R.id.ingridients_amount);
             ingridient = (TextView) itemView.findViewById(R.id.ingridients_name);
             layout = (LinearLayout) itemView.findViewById(R.id.item_ingridient_layout);
-          //  description = (TextView) itemView.findViewById(R.id.ingredients_amount_description);
         }
     }
 }
