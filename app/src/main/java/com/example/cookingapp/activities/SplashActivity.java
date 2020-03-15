@@ -19,7 +19,7 @@ public class SplashActivity extends AppCompatActivity {
         setContentView(R.layout.activity_splash);
         sharedPreferences = getSharedPreferences("MY_SHARED_PREF", MODE_PRIVATE);
         diet = sharedPreferences.getString("DIET", null);
-        if (diet.equals("all")){
+        if (diet.equals("all") || diet.isEmpty()){
             Intent mainIntent = new Intent(SplashActivity.this, MainActivity.class);
             startActivity(mainIntent);
         } else {
