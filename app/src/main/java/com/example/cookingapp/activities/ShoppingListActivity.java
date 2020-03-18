@@ -1,20 +1,30 @@
 package com.example.cookingapp.activities;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
+import androidx.fragment.app.FragmentManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.RelativeLayout;
+import android.widget.Toast;
 
 import com.example.cookingapp.R;
 import com.example.cookingapp.adapters.ShoppingRecipesAdapter;
+import com.example.cookingapp.fragments.TopLvlFeaturedFragment;
 import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.interfaces.SetVisibilityListener;
+import com.example.cookingapp.models.IngredientsModel;
+import com.example.cookingapp.models.ShoppingListModel;
 import com.example.cookingapp.models.ShoppingRecipe;
 
 import java.util.ArrayList;
@@ -27,6 +37,22 @@ public class ShoppingListActivity extends AppCompatActivity implements MealListe
     List<ShoppingRecipe> recipes = new ArrayList<>();
     ShoppingRecipesAdapter adapter;
     RelativeLayout noItemsLayout, layoutWithItems;
+    ImageButton add;
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.shopingnav_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        ShoppingRecipe.deleteAll(ShoppingRecipe.class);
+        ShoppingListModel.deleteAll(ShoppingListModel.class);
+        adapter.notifyDataSetChanged();
+        setVisibility();
+        return super.onOptionsItemSelected(item);
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -35,6 +61,16 @@ public class ShoppingListActivity extends AppCompatActivity implements MealListe
 
         noItemsLayout = (RelativeLayout) findViewById(R.id.no_shoppingList_items_layout);
         layoutWithItems = (RelativeLayout) findViewById(R.id.shoppinglist_with_items_layout);
+        add = (ImageButton) findViewById(R.id.add_button);
+        final TopLvlFeaturedFragment fragment = new TopLvlFeaturedFragment();
+        add.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(ShoppingListActivity.this, BrowoseActivity.class);
+                startActivity(intent);
+            }
+        });
+
         setLayoutsVisibility();
         new addShopingListItemsAsyncTask().execute();
 
@@ -47,7 +83,11 @@ public class ShoppingListActivity extends AppCompatActivity implements MealListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ShoppingRecipesAdapter(this, recipes, this, this);
         recyclerView.setAdapter(adapter);
+
     }
+
+
+
 
     @Override
     public void getMealInfo(int id) {
