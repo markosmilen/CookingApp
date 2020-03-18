@@ -100,6 +100,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                 SharedPreferences.Editor editor = sharedPreferences.edit();
                 editor.putString("DIET", "all");
                 editor.commit();
+                diet = "all";
                 progressBar.setVisibility(View.VISIBLE);
                 generateRandomMealsList();
                 randomMealsAdapter = new RandomMealsAdapter(randomMeals, getContext(), BottomLvlDietsFragment.this);
@@ -210,13 +211,9 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
 
 
                 final LinearLayoutManager linearLayoutManager =(LinearLayoutManager) recyclerView.getLayoutManager();
-                if (diet.equals("all")){
+                if (diet.equals("all") || diet == null){
                     if(!isLoading){
-                        Log.d("ISLOADING_IS", isLoading+"");
-                        Log.d("DIETIS", diet);
-                        Log.d("POSITION_IS", linearLayoutManager.findLastCompletelyVisibleItemPosition()+ "");
-                        Log.d("DATA_SIZE_IS", randomMeals.size()+"");
-                        if(linearLayoutManager != null && linearLayoutManager.findFirstCompletelyVisibleItemPosition() == randomMeals.size()-2){
+                        if(linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == randomMeals.size()-2){
                             randomMeals.add(null);
                             randomMealsAdapter.notifyItemInserted(randomMeals.size()-1);
                             recyclerView.scrollToPosition(randomMeals.size()-1);

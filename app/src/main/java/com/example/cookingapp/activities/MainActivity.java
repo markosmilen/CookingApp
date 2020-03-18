@@ -82,5 +82,6 @@ public class MainActivity extends AppCompatActivity implements DietListener {
 
         Intent browoseIntent = new Intent(MainActivity.this, BrowoseActivity.class);
         startActivity(browoseIntent);
+        finish();
     }
 }
