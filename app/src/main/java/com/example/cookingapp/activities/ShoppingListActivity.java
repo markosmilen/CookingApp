@@ -83,11 +83,7 @@ public class ShoppingListActivity extends AppCompatActivity implements MealListe
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         adapter = new ShoppingRecipesAdapter(this, recipes, this, this);
         recyclerView.setAdapter(adapter);
-
     }
-
-
-
 
     @Override
     public void getMealInfo(int id) {
