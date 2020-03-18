@@ -13,8 +13,10 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.example.cookingapp.R;
+import com.example.cookingapp.activities.ShoppingListActivity;
 import com.example.cookingapp.interfaces.MealListener;
 import com.example.cookingapp.interfaces.RerfreshListener;
+import com.example.cookingapp.interfaces.SetVisibilityListener;
 import com.example.cookingapp.models.ShoppingListModel;
 import com.example.cookingapp.models.ShoppingRecipe;
 
@@ -27,12 +29,14 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
     List<ShoppingRecipe> recipes;
     int id;
     MealListener listener;
+    SetVisibilityListener visibilityListener;
 
-    public ShoppingRecipesAdapter(Context context, List<ShoppingRecipe> recipes, MealListener listener) {
+    public ShoppingRecipesAdapter(Context context, List<ShoppingRecipe> recipes, MealListener listener, SetVisibilityListener visibilityListener) {
         this.context = context;
         this.recipes = recipes;
         this.inflater = LayoutInflater.from(context);
         this.listener = listener;
+        this.visibilityListener = visibilityListener;
     }
 
     @NonNull
@@ -77,12 +81,12 @@ public class ShoppingRecipesAdapter extends RecyclerView.Adapter<ShoppingRecipes
             delete.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-
                     ShoppingListModel.deleteAll(ShoppingListModel.class, "recipe = ?", recipes.get(getAdapterPosition()).getId() + "");
                     ShoppingRecipe deleteModel = recipes.get(getAdapterPosition());
                     deleteModel.delete();
                     recipes.remove(getAdapterPosition());
                     notifyDataSetChanged();
+                    visibilityListener.setVisibility();
                 }
             });
         }

@@ -213,7 +213,7 @@ public class BottomLvlDietsFragment extends Fragment implements MealListener {
                 final LinearLayoutManager linearLayoutManager =(LinearLayoutManager) recyclerView.getLayoutManager();
                 if (diet.equals("all") || diet == null){
                     if(!isLoading){
-                        if(linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == randomMeals.size()-2){
+                        if(linearLayoutManager != null && linearLayoutManager.findLastCompletelyVisibleItemPosition() == randomMeals.size()-1){
                             randomMeals.add(null);
                             randomMealsAdapter.notifyItemInserted(randomMeals.size()-1);
                             recyclerView.scrollToPosition(randomMeals.size()-1);
