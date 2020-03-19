@@ -40,7 +40,7 @@ public class EquipmentAdapter extends RecyclerView.Adapter<EquipmentAdapter.Equi
         EquipmentModel model = equipment.get(position);
         holder.equipment.setText(model.getName());
         String img = "https://spoonacular.com/cdn/equipment_250x250/" +  model.getImage();
-        Glide.with(context).load(img).centerInside().into(holder.equipmentImg);
+        Glide.with(context.getApplicationContext()).load(img).centerInside().into(holder.equipmentImg);
     }
 
     @Override

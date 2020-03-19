@@ -60,7 +60,7 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     int mealID;
     Gson gson;
     RecipeInformationModel recepiInfo;
-    Boolean isBookmarked, isCooked = false;
+    Boolean isBookmarked, isCooked = false, isLoaded = false;
     String mealName, imgUrl;
     ProgressBar progressBar, shopping_progress;
     LinearLayout linearLayout;
@@ -98,7 +98,6 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
             @Override
             public void onTabSelected(TabLayout.Tab tab) {
                 viewPager.setCurrentItem(tab.getPosition());
-                Toast.makeText(DetailsActivity.this, "THIS IS THE FIRST CLICK", Toast.LENGTH_SHORT).show();
             }
 
             @Override
@@ -151,9 +150,10 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                             if (recepiInfo.getInstructions() != null){
                                 summary.setHtml(recepiInfo.getInstructions(), new HtmlAssetsImageGetter(summary));
                             }
-                            Glide.with(DetailsActivity.this).load(imgUrl).placeholder(R.drawable.placeholder).into(mealImg);
+                            Glide.with(getApplicationContext()).load(imgUrl).placeholder(R.drawable.placeholder).into(mealImg);
                             progressBar.setVisibility(View.GONE);
                             linearLayout.setVisibility(View.VISIBLE);
+                            isLoaded = true;
                         }
                     });
                 }
@@ -162,12 +162,13 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
     }
 
     public void onBookmarkClicked(View view) {
+        bookmarked.setEnabled(false);
         if(!isBookmarked){
             isBookmarked = true;
             BookmarkedModel bookmark = new BookmarkedModel(mealID, imgUrl, mealName);
             bookmark.save();
             bookmarked.setBackgroundResource(R.drawable.ic_bookmarked);
-            Toast.makeText(this, "NOW ITS BOOKMARKED", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Bookmarked!", Toast.LENGTH_SHORT).show();
 
         } else {
             isBookmarked = false;
@@ -181,8 +182,10 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
                 }
             }
             bookmarked.setBackgroundResource(R.drawable.ic_not_bookmarked);
-            Toast.makeText(this, "NOW IT IS NOT", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Removed from bookmarks!", Toast.LENGTH_SHORT).show();
         }
+        bookmarkedMeals = BookmarkedModel.listAll(BookmarkedModel.class);
+        bookmarked.setEnabled(true);
     }
 
     public boolean isMealBookmarked(int id){
@@ -319,11 +322,13 @@ public class DetailsActivity extends AppCompatActivity implements IngredientsLis
         cooked.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                isCooked = true;
-                CookedModel model = new CookedModel(mealID, imgUrl, mealName);
-                model.save();
-                cooked.setVisibility(View.INVISIBLE);
-                uncoocked.setVisibility(View.VISIBLE);
+                if (isLoaded){
+                    isCooked = true;
+                    CookedModel model = new CookedModel(mealID, imgUrl, mealName);
+                    model.save();
+                    cooked.setVisibility(View.INVISIBLE);
+                    uncoocked.setVisibility(View.VISIBLE);
+                }
             }
         });
         uncoocked.setOnClickListener(new View.OnClickListener() {

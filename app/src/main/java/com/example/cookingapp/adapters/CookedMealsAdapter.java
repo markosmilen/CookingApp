@@ -44,7 +44,7 @@ public class CookedMealsAdapter extends RecyclerView.Adapter<CookedMealsAdapter.
         CookedModel model = cookedMeals.get(position);
         holder.title.setText(model.getName());
         String url = model.getImg();
-        Glide.with(context).load(url).centerCrop().into(holder.imageView);
+        Glide.with(context.getApplicationContext()).load(url).centerCrop().into(holder.imageView);
     }
 
     @Override

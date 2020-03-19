@@ -91,7 +91,6 @@ public class TopLvlShoppingListFragment extends Fragment {
         protected Void doInBackground(Void... voids) {
             cartList = ShoppingListModel.listAll(ShoppingListModel.class);
             shoppingRecipes = ShoppingRecipe.listAll(ShoppingRecipe.class);
-            updateView();
             return null;
         }
 

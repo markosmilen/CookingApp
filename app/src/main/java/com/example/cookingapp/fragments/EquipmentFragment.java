@@ -100,15 +100,17 @@ public class EquipmentFragment extends Fragment {
                     EquipmentByIdModel model = gson.fromJson(jsonstring, EquipmentByIdModel.class);
                     equpment = model.getEquipment();
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-                            adapter = new EquipmentAdapter(getContext(), equpment);
-                            recyclerView.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
+                    if(getActivity() != null){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+                                adapter = new EquipmentAdapter(getContext(), equpment);
+                                recyclerView.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             }
         });
