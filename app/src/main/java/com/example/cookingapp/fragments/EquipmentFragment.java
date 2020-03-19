@@ -71,7 +71,6 @@ public class EquipmentFragment extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_view_equipment);
         getEquipment(id);
         return view;
-
     }
 
     private void getEquipment(String id) {

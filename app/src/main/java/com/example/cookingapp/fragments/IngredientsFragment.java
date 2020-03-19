@@ -107,17 +107,21 @@ public class IngredientsFragment extends Fragment {
                     Log.d("THISISTHE", jsonString);
                     RecepieIngridientsModel model = gson.fromJson(jsonString, RecepieIngridientsModel.class);
                     ingrediens = model.getIngredients();
-                    listener.passIngredients(ingrediens);
+                    if (ingrediens != null){
+                        listener.passIngredients(ingrediens);
+                    }
 
-                    getActivity().runOnUiThread(new Runnable() {
-                        @Override
-                        public void run() {
-                            recycler.setLayoutManager(new LinearLayoutManager(getContext()));
-                            adapter = new IngridientsAdapter(getContext(), ingrediens);
-                            recycler.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-                        }
-                    });
+                    if (getActivity() != null){
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                recycler.setLayoutManager(new LinearLayoutManager(getContext()));
+                                adapter = new IngridientsAdapter(getContext(), ingrediens);
+                                recycler.setAdapter(adapter);
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+                    }
                 }
             }
         });
